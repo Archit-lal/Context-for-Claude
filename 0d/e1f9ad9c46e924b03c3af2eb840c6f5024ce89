@@ -1,0 +1,35 @@
+index.html
+  s_0e62a9e2988b29::t_0498a58847b754 81
+  s_0e62a9e2988b29::t_3f2c19d51c306a 34-36
+  s_0e62a9e2988b29::t_aa31fdba62b626 83
+  s_0e9ad3a205d861::t_f665b07f780f36 82
+thesis.html
+  s_0e62a9e2988b29::t_f90523e79f081b 67
+  s_0e62a9e2988b29::t_e89ebd557f8263 70,72-73
+  s_0e62a9e2988b29::t_7152ee33904701 1-6,8-66,68-69,71,74-85
+  s_0e62a9e2988b29::t_a8fb1f26204bdd 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "0de1f9ad9c46e924b03c3af2eb840c6f5024ce89",
+  "prompts": {},
+  "sessions": {
+    "s_0e62a9e2988b29": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1ded8078-9066-48c6-b3a2-945bc7bce508",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    },
+    "s_0e9ad3a205d861": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0d0f6918-e135-41f2-b66f-fd3775f34b29",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
