@@ -51,6 +51,7 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .e-claude{width:19px;height:19px;flex:none}
 .e-meta{display:inline-flex;align-items:center;gap:.32rem;margin-left:.3rem;font-size:.8rem;color:var(--mid)}
 .e-omi-mark{width:16px;height:16px;flex:none}
+.e-peri-mark{width:16px;height:16px;flex:none}
 .e-desc{display:block;margin-top:.2rem;font-size:.95rem;color:var(--mid)}
 
 .by{display:inline-flex;align-items:center;gap:.7rem;margin-top:3.5rem;color:var(--mid);font-size:.95rem;text-decoration:none}
@@ -117,7 +118,17 @@ footer a:hover{color:var(--ink)}
           </g>
         </svg>
       </a>
-      <span class="e-meta">by Periphery · powered by
+      <span class="e-meta">by
+        <svg class="e-peri-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <g stroke="#171412" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11.9 1.7C17.3 1.75 21.75 5.9 21.7 11.1C21.65 16.2 17.9 19.95 12.4 19.9C6.9 19.85 2.35 16.1 2.2 10.8C2.1 5.6 6.4 1.75 11.9 1.7Z"/>
+            <path d="M7.1 19.5C7.3 21.6 6.8 22.7 5.3 22.4"/>
+            <path d="M16.9 19.5C16.7 21.6 17.2 22.7 18.7 22.4"/>
+          </g>
+          <ellipse cx="8.5" cy="11.9" rx="1.1" ry="1.75" fill="#171412"/>
+          <ellipse cx="15.5" cy="11.9" rx="1.1" ry="1.75" fill="#171412"/>
+        </svg>
+        Periphery · powered by
         <a class="e-mark" href="https://www.omi.me" target="_blank" rel="noopener noreferrer" aria-label="Omi">
           <svg class="e-omi-mark" viewBox="0 0 24 24" aria-hidden="true">
             <g fill="#1C1E20">
