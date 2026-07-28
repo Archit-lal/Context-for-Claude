@@ -1,0 +1,22 @@
+thesis.html
+  s_25f8ff007195e3::t_3592941e837332 1-85
+index.html
+  s_25f8ff007195e3::t_8757194c20d0b1 34-35
+  s_25f8ff007195e3::t_a0516c39664dbe 83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "0a14c4d866a30478bb898ffbf28c2d040a66d544",
+  "prompts": {},
+  "sessions": {
+    "s_25f8ff007195e3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "821c803f-1e35-4d95-a7a9-e5540fc6492a",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
