@@ -21,6 +21,7 @@
   --line:#E6DFD6;--bronze:#8F6420;--red:#C9352B;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:clip}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 main{max-width:48rem;margin:0 auto;padding:5.5rem 1.75rem 4rem}
 a{color:inherit}
@@ -30,6 +31,60 @@ a:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius
 .mark svg{width:22px;height:22px;flex:none}
 
 h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);line-height:1.08;letter-spacing:-.035em}
+
+/* --- AR passthrough band: 640x200 monochrome-green HUD --- */
+.hud{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-top:2.75rem;height:300vh}
+.hud-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center}
+.lens{position:relative;width:100%;aspect-ratio:640/200;max-height:64vh;overflow:hidden;background:#141b18}
+
+/* the world seen through 98% passthrough */
+.scene{position:absolute;inset:0;
+  background:
+    /* figures across the room */
+    radial-gradient(5.5% 30% at 31% 76%, rgba(12,9,8,.88), transparent 72%),
+    radial-gradient(4.5% 24% at 39% 79%, rgba(12,9,8,.8), transparent 72%),
+    radial-gradient(6% 32% at 71% 74%, rgba(12,9,8,.85), transparent 72%),
+    radial-gradient(4% 22% at 88% 80%, rgba(12,9,8,.78), transparent 72%),
+    /* warm window bays */
+    linear-gradient(90deg,transparent 3%,rgba(255,212,158,.46) 5%,rgba(255,212,158,.46) 13%,transparent 16%),
+    linear-gradient(90deg,transparent 21%,rgba(255,226,182,.34) 23%,rgba(255,226,182,.34) 29%,transparent 31%),
+    linear-gradient(90deg,transparent 43%,rgba(255,205,150,.26) 45%,rgba(255,205,150,.26) 49%,transparent 51%),
+    linear-gradient(90deg,transparent 58%,rgba(255,219,170,.42) 61%,rgba(255,219,170,.42) 74%,transparent 77%),
+    linear-gradient(90deg,transparent 87%,rgba(255,210,160,.30) 89%,rgba(255,210,160,.30) 96%,transparent 98%),
+    /* room: wall, floor line, foreground */
+    linear-gradient(180deg,#2e2925 0%,#3d352c 54%,#241e19 56%,#131010 100%);
+  filter:blur(9px) saturate(.9);transform:scale(1.12)}
+.scene::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(75% 120% at 50% 50%, transparent 40%, rgba(0,0,0,.55) 100%)}
+
+/* the green micro-LED layer */
+.glass{position:absolute;inset:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent 100%)}
+.hud-text{padding:0 6vw;will-change:transform}
+.hud-text p{font-size:clamp(.95rem,1.75vw,1.45rem);line-height:1.55;letter-spacing:.005em;
+  color:#8CF7B4;text-shadow:0 0 12px rgba(110,240,160,.45),0 0 2px rgba(180,255,210,.6);
+  margin:0 0 1.15em}
+.hud-text p:last-child{margin-bottom:0}
+.hud-text b{font-weight:600;color:#C8FFDD}
+.hud-text a{color:#C8FFDD;text-decoration:none;border-bottom:1px solid rgba(200,255,221,.45)}
+.hud-text a:hover{border-bottom-color:#C8FFDD}
+
+/* faint scanline + lens tint, as on a waveguide */
+.lens::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(140,247,180,.045) 0 1px,transparent 1px 3px)}
+
+@media (max-width:700px){
+  .lens{aspect-ratio:auto;height:66vh;max-height:none}
+  .hud-text{padding:0 7vw}
+}
+@media (prefers-reduced-motion:reduce){
+  .hud{height:auto}
+  .hud-stage{position:static;height:auto;padding:2.5rem 0}
+  .lens{aspect-ratio:auto;height:auto;max-height:none}
+  .glass{position:static;-webkit-mask-image:none;mask-image:none}
+  .hud-text{transform:none!important;padding:2.5rem 6vw}
+}
 
 .say{margin-top:2.25rem;color:var(--mid)}
 .say p+p{margin-top:1rem}
@@ -82,12 +137,21 @@ footer a:hover{color:var(--ink)}
 
   <h1>We build software for what comes after the screen.</h1>
 
-  <div class="say">
-    <p>Every generation until now had to learn the machine. Ours is the first that won't. Technology adapts to us now, not the other way around.</p>
-    <p>When that finishes happening the screen goes. Goods and services get handled in the background, and what's left is people in rooms, talking. Every interaction that matters is with a person, and it's a conversation in some form.</p>
-    <p>We think digital only gets worse from here, and being somewhere in person only gets rarer and more valuable.</p>
-    <p><b>So we build for the world where you just exist.</b> The goal is <a href="https://open.substack.com/pub/thefuturistsage/p/manifestation-machines" target="_blank" rel="noopener noreferrer">manifestation machines</a>: intent in, reality out, nothing in between asking for your attention.</p>
-  </div>
+  <section class="hud" id="hud">
+    <div class="hud-stage">
+      <div class="lens">
+        <div class="scene" aria-hidden="true"></div>
+        <div class="glass">
+          <div class="hud-text" id="hudText">
+            <p>Every generation until now had to learn the machine. Ours is the first that won't. Technology adapts to us now, not the other way around.</p>
+            <p>When that finishes happening the screen goes. Goods and services get handled in the background, and what's left is people in rooms, talking. Every interaction that matters is with a person, and it's a conversation in some form.</p>
+            <p>We think digital only gets worse from here, and being somewhere in person only gets rarer and more valuable.</p>
+            <p><b>So we build for the world where you just exist.</b> The goal is <a href="https://open.substack.com/pub/thefuturistsage/p/manifestation-machines" target="_blank" rel="noopener noreferrer">manifestation machines</a>: intent in, reality out, nothing in between asking for your attention.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <div class="earshot">
     <svg class="e-frame" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
@@ -154,5 +218,36 @@ footer a:hover{color:var(--ink)}
   </footer>
 
 </main>
+<script>
+(function(){
+  var hud = document.getElementById('hud'),
+      text = document.getElementById('hudText'),
+      lens = hud && hud.querySelector('.lens');
+  if (!hud || !text || !lens) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ticking = false;
+
+  function place(){
+    ticking = false;
+    var rect = hud.getBoundingClientRect(),
+        span = hud.offsetHeight - window.innerHeight;
+    if (span <= 0) return;
+    var p = Math.min(1, Math.max(0, -rect.top / span));
+    // hold still briefly at each end so the first and last lines can be read
+    var eased = Math.min(1, Math.max(0, (p - 0.12) / 0.76));
+    var travel = text.scrollHeight - lens.clientHeight;
+    var start = lens.clientHeight * 0.62;
+    text.style.transform = 'translateY(' + (start - eased * (travel + start * 1.5)) + 'px)';
+  }
+
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(place); } }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  place();
+})();
+</script>
 </body>
 </html>
