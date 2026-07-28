@@ -31,64 +31,8 @@ a:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius
 
 h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);line-height:1.08;letter-spacing:-.035em}
 
-/* --- AR passthrough band: 640x200 monochrome-green HUD --- */
-.thesis{margin-top:2.6rem}
-.thesis>summary{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;list-style:none;
-  font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
-.thesis>summary::-webkit-details-marker{display:none}
-.thesis>summary::after{content:'+';font-size:.85rem;letter-spacing:0;line-height:1}
-.thesis[open]>summary::after{content:'\2212'}
-.thesis>summary:hover{color:var(--ink)}
-.thesis>summary:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius:4px}
-
-.hud{margin-top:1rem}
-.lens{position:relative;width:100%;overflow:hidden;border-radius:14px;background:#141b18}
-
-/* the world seen through 98% passthrough */
-.scene{position:absolute;inset:0;
-  background:
-    /* figures across the room */
-    radial-gradient(5.5% 30% at 31% 76%, rgba(12,9,8,.88), transparent 72%),
-    radial-gradient(4.5% 24% at 39% 79%, rgba(12,9,8,.8), transparent 72%),
-    radial-gradient(6% 32% at 71% 74%, rgba(12,9,8,.85), transparent 72%),
-    radial-gradient(4% 22% at 88% 80%, rgba(12,9,8,.78), transparent 72%),
-    /* warm window bays */
-    linear-gradient(90deg,transparent 3%,rgba(255,212,158,.46) 5%,rgba(255,212,158,.46) 13%,transparent 16%),
-    linear-gradient(90deg,transparent 21%,rgba(255,226,182,.34) 23%,rgba(255,226,182,.34) 29%,transparent 31%),
-    linear-gradient(90deg,transparent 43%,rgba(255,205,150,.26) 45%,rgba(255,205,150,.26) 49%,transparent 51%),
-    linear-gradient(90deg,transparent 58%,rgba(255,219,170,.42) 61%,rgba(255,219,170,.42) 74%,transparent 77%),
-    linear-gradient(90deg,transparent 87%,rgba(255,210,160,.30) 89%,rgba(255,210,160,.30) 96%,transparent 98%),
-    /* room: wall, floor line, foreground */
-    linear-gradient(180deg,#2e2925 0%,#3d352c 54%,#241e19 56%,#131010 100%);
-  filter:blur(9px) saturate(.9);transform:scale(1.12)}
-.scene::after{content:'';position:absolute;inset:0;
-  background:radial-gradient(75% 120% at 50% 50%, transparent 40%, rgba(0,0,0,.55) 100%)}
-
-/* the green micro-LED layer */
-.glass{position:relative}
-.hud-text{padding:1.8rem 1.7rem}
-.hud-text p{font-size:.92rem;line-height:1.55;letter-spacing:.005em;
-  color:#8CF7B4;text-shadow:0 0 9px rgba(110,240,160,.42),0 0 2px rgba(180,255,210,.55);
-  margin:0 0 1em}
-.hud-text p:last-child{margin-bottom:0}
-.hud-text b{font-weight:600;color:#C8FFDD}
-.hud-text a{color:#C8FFDD;text-decoration:none;border-bottom:1px solid rgba(200,255,221,.45)}
-.hud-text a:hover{border-bottom-color:#C8FFDD}
-
-/* faint scanline + lens tint, as on a waveguide */
-.lens::after{content:'';position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(180deg,rgba(140,247,180,.045) 0 1px,transparent 1px 3px)}
-
-@media (max-width:700px){
-  .hud-text{padding:1.5rem 1.3rem}
-  .hud-text p{font-size:.86rem}
-}
-
-.say{margin-top:2.25rem;color:var(--mid)}
-.say p+p{margin-top:1rem}
-.say b{font-weight:400;color:var(--ink)}
-.say a{color:var(--bronze);text-decoration:none;border-bottom:1px solid rgba(143,100,32,.35)}
-.say a:hover{border-bottom-color:var(--bronze)}
+.thesis-link{display:inline-block;margin-top:1.6rem;font-size:.92rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid rgba(143,100,32,.35)}
+.thesis-link:hover{border-bottom-color:var(--bronze)}
 
 .slabel{margin-top:3.25rem;font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 .earshot{position:relative;margin-top:.9rem;padding:1.5rem 1.7rem}
@@ -136,22 +80,7 @@ footer a:hover{color:var(--ink)}
 
   <h1>We build software for what comes after the screen.</h1>
 
-  <details class="thesis">
-    <summary>Thesis</summary>
-    <section class="hud" id="hud">
-      <div class="lens">
-        <div class="scene" aria-hidden="true"></div>
-        <div class="glass">
-          <div class="hud-text" id="hudText">
-            <p>Every generation until now had to learn the machine. Ours is the first that won't. Technology adapts to us now, not the other way around.</p>
-            <p>When that finishes happening the screen goes. Goods and services get handled in the background, and what's left is people in rooms, talking. Every interaction that matters is with a person, and it's a conversation in some form.</p>
-            <p>We think digital only gets worse from here, and being somewhere in person only gets rarer and more valuable.</p>
-            <p><b>So we build for the world where you just exist.</b> The goal is <a href="https://open.substack.com/pub/thefuturistsage/p/manifestation-machines" target="_blank" rel="noopener noreferrer">manifestation machines</a>: intent in, reality out, nothing in between asking for your attention.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </details>
+  <a class="thesis-link" href="thesis.html">Read the thesis &rarr;</a>
 
   <h2 class="slabel">Our products</h2>
 
