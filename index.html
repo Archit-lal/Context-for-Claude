@@ -35,9 +35,16 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .say p+p{margin-top:1rem}
 .say b{font-weight:400;color:var(--ink)}
 
-.earshot{display:block;margin-top:3.25rem;padding:1.3rem 1.4rem;border:1.5px solid var(--red);border-radius:2px;text-decoration:none}
-.earshot:hover{background:rgba(201,53,43,.05)}
-.e-name{display:block;font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink)}
+.earshot{position:relative;display:block;margin-top:3.25rem;padding:1.5rem 1.7rem;text-decoration:none}
+.e-frame{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.e-frame path{fill:none;stroke:var(--red);stroke-linecap:round;stroke-linejoin:round}
+.e-s1{stroke-width:2.6}
+.e-s2{stroke-width:1.6;opacity:.5}
+.earshot:hover .e-s1{stroke-width:3.6}
+.earshot:hover .e-s2{stroke-width:2.2;opacity:.65}
+.e-head{display:flex;align-items:center;gap:.5rem}
+.e-name{font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink)}
+.e-claude{width:19px;height:19px;flex:none}
 .e-desc{display:block;margin-top:.2rem;font-size:.95rem;color:var(--mid)}
 
 .by{display:inline-flex;align-items:center;gap:.7rem;margin-top:3.5rem;color:var(--mid);font-size:.95rem;text-decoration:none}
@@ -77,7 +84,32 @@ footer a:hover{color:var(--ink)}
   </div>
 
   <a class="earshot" href="#">
-    <span class="e-name">Earshot</span>
+    <svg class="e-frame" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="crayon" x="-10%" y="-30%" width="120%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.055 0.03" numOctaves="3" seed="11" result="warp"/>
+          <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.9 0.55" numOctaves="2" seed="4" result="grain"/>
+          <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.1 0.06" result="grainA"/>
+          <feComposite in="disp" in2="grainA" operator="in"/>
+        </filter>
+      </defs>
+      <g filter="url(#crayon)">
+        <path class="e-s1" vector-effect="non-scaling-stroke" d="M15 6C120 3.5 260 9.5 385 6C391 6.5 394 11 393.5 17C395.5 40 392.5 60 394 83C394.5 89 391 94 385 94.5C260 97.5 120 91.5 15 95C9 94.5 6 90 6.5 84C5 60 8 38 6 17C5.5 11 9 6.5 15 6C21 5.6 27 5.9 33 6.4"/>
+        <path class="e-s2" vector-effect="non-scaling-stroke" d="M17 8C125 5.5 258 11 383 8C388.5 8.5 391.5 12.5 391 18C392.5 41 390 61 391.5 82C392 87.5 388.5 92 383 92.5C258 95.5 125 89.5 17 93C11.5 92.5 8.5 88.5 9 83C7.5 59 10.5 37 8.5 18C8 13 11.5 8.5 17 8"/>
+      </g>
+    </svg>
+    <span class="e-head">
+      <span class="e-name">Earshot</span>
+      <svg class="e-claude" viewBox="0 0 24 24" aria-hidden="true">
+        <g stroke="#D97757" stroke-width="2.1" stroke-linecap="round">
+          <path d="M12 12L12 3"/><path d="M12 12L16.87 4.43"/><path d="M12 12L20.19 8.26"/>
+          <path d="M12 12L20.91 13.28"/><path d="M12 12L18.8 17.89"/><path d="M12 12L14.54 20.64"/>
+          <path d="M12 12L9.46 20.64"/><path d="M12 12L5.2 17.89"/><path d="M12 12L3.09 13.28"/>
+          <path d="M12 12L3.81 8.26"/><path d="M12 12L7.13 4.43"/>
+        </g>
+      </svg>
+    </span>
     <span class="e-desc">Continuous ambient context capturing for Claude.</span>
   </a>
 
@@ -87,7 +119,7 @@ footer a:hover{color:var(--ink)}
   </a>
 
   <footer>
-    <span>Periphery · New York</span>
+    <span>Periphery · New York · San Francisco</span>
     <span><a href="mailto:architdraftid@gmail.com">architdraftid@gmail.com</a></span>
   </footer>
 
