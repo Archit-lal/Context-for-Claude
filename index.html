@@ -32,7 +32,16 @@ a:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius
 h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);line-height:1.08;letter-spacing:-.035em}
 
 /* --- AR passthrough band: 640x200 monochrome-green HUD --- */
-.hud{margin-top:3rem}
+.thesis{margin-top:2.6rem}
+.thesis>summary{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;list-style:none;
+  font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.thesis>summary::-webkit-details-marker{display:none}
+.thesis>summary::after{content:'+';font-size:.85rem;letter-spacing:0;line-height:1}
+.thesis[open]>summary::after{content:'\2212'}
+.thesis>summary:hover{color:var(--ink)}
+.thesis>summary:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius:4px}
+
+.hud{margin-top:1rem}
 .lens{position:relative;width:100%;overflow:hidden;border-radius:14px;background:#141b18}
 
 /* the world seen through 98% passthrough */
@@ -127,7 +136,9 @@ footer a:hover{color:var(--ink)}
 
   <h1>We build software for what comes after the screen.</h1>
 
-  <section class="hud" id="hud">
+  <details class="thesis">
+    <summary>Thesis</summary>
+    <section class="hud" id="hud">
       <div class="lens">
         <div class="scene" aria-hidden="true"></div>
         <div class="glass">
@@ -139,7 +150,8 @@ footer a:hover{color:var(--ink)}
           </div>
         </div>
       </div>
-  </section>
+    </section>
+  </details>
 
   <h2 class="slabel">Our products</h2>
 
