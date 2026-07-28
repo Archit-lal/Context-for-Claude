@@ -35,6 +35,15 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .say p+p{margin-top:1rem}
 .say b{font-weight:400;color:var(--ink)}
 
+.product{display:flex;align-items:center;gap:1.15rem;margin-top:3.25rem;padding:1.25rem 1.5rem;border:1px solid var(--line);border-radius:14px;background:#fff;text-decoration:none;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.product:hover{border-color:var(--bronze);box-shadow:0 6px 22px rgba(23,20,18,.07);transform:translateY(-1px)}
+.p-n{font-size:.62rem;letter-spacing:.14em;color:var(--faint);flex:none}
+.p-text{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;flex:1;min-width:0}
+.p-text b{font-weight:600;font-size:1.1rem;letter-spacing:-.02em;color:var(--ink)}
+.p-text span{font-size:.95rem;color:var(--mid)}
+.p-go{flex:none;color:var(--bronze);transition:transform .18s ease}
+.product:hover .p-go{transform:translateX(3px)}
+
 .by{display:flex;align-items:center;gap:.7rem;margin-top:3.5rem;color:var(--mid);font-size:.95rem}
 .by img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 1px var(--line)}
 .by b{font-weight:600;color:var(--ink)}
@@ -68,6 +77,15 @@ footer a:hover{color:var(--ink)}
     <p>We think digital only gets worse from here, and being somewhere in person only gets rarer and more valuable.</p>
     <p><b>So we build for the world where you just exist.</b> The goal is manifestation machines: intent in, reality out, nothing in between asking for your attention.</p>
   </div>
+
+  <a class="product" href="#">
+    <span class="p-n">01</span>
+    <span class="p-text">
+      <b>Earshot</b>
+      <span>Continuous ambient context capturing for Claude.</span>
+    </span>
+    <span class="p-go" aria-hidden="true">&rarr;</span>
+  </a>
 
   <div class="by">
     <img src="archit.jpg" alt="Archit Lal" width="44" height="44">
