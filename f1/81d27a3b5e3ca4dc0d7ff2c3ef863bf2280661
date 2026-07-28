@@ -1,0 +1,19 @@
+index.html
+  s_0e62a9e2988b29::t_c9b2916f672226 78,80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "f181d27a3b5e3ca4dc0d7ff2c3ef863bf2280661",
+  "prompts": {},
+  "sessions": {
+    "s_0e62a9e2988b29": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1ded8078-9066-48c6-b3a2-945bc7bce508",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
