@@ -1,0 +1,25 @@
+.github/workflows/deploy.yml
+  s_25f8ff007195e3::t_2a166845d56c30 1-32
+README.md
+  s_25f8ff007195e3::t_effa272b471632 1-13
+favicon.svg
+  s_25f8ff007195e3::t_a87a87d33a836c 1-5
+index.html
+  s_25f8ff007195e3::t_d4438d970bf07a 1-74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "c211e0f319280150e633d75b13891553940c9ed0",
+  "prompts": {},
+  "sessions": {
+    "s_25f8ff007195e3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "821c803f-1e35-4d95-a7a9-e5540fc6492a",
+        "model": "unknown"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
