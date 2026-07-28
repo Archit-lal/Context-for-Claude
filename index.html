@@ -34,6 +34,8 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .say{margin-top:2.25rem;color:var(--mid)}
 .say p+p{margin-top:1rem}
 .say b{font-weight:400;color:var(--ink)}
+.say a{color:var(--bronze);text-decoration:none;border-bottom:1px solid rgba(143,100,32,.35)}
+.say a:hover{border-bottom-color:var(--bronze)}
 
 .earshot{position:relative;display:block;margin-top:3.25rem;padding:1.5rem 1.7rem;text-decoration:none}
 .e-frame{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
@@ -42,9 +44,11 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .e-s2{stroke-width:1.6;opacity:.5}
 .earshot:hover .e-s1{stroke-width:3.6}
 .earshot:hover .e-s2{stroke-width:2.2;opacity:.65}
-.e-head{display:flex;align-items:center;gap:.5rem}
+.e-head{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .e-name{font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink)}
 .e-claude{width:19px;height:19px;flex:none}
+.e-omi{display:inline-flex;align-items:center;gap:.32rem;margin-left:.3rem;font-size:.8rem;color:var(--mid)}
+.e-omi-mark{width:16px;height:16px;flex:none}
 .e-desc{display:block;margin-top:.2rem;font-size:.95rem;color:var(--mid)}
 
 .by{display:inline-flex;align-items:center;gap:.7rem;margin-top:3.5rem;color:var(--mid);font-size:.95rem;text-decoration:none}
@@ -80,7 +84,7 @@ footer a:hover{color:var(--ink)}
     <p>Every generation until now had to learn the machine. Ours is the first that won't. Technology adapts to us now, not the other way around.</p>
     <p>When that finishes happening the screen goes. Goods and services get handled in the background, and what's left is people in rooms, talking. Every interaction that matters is with a person, and it's a conversation in some form.</p>
     <p>We think digital only gets worse from here, and being somewhere in person only gets rarer and more valuable.</p>
-    <p><b>So we build for the world where you just exist.</b> The goal is manifestation machines: intent in, reality out, nothing in between asking for your attention.</p>
+    <p><b>So we build for the world where you just exist.</b> The goal is <a href="https://open.substack.com/pub/thefuturistsage/p/manifestation-machines" target="_blank" rel="noopener noreferrer">manifestation machines</a>: intent in, reality out, nothing in between asking for your attention.</p>
   </div>
 
   <a class="earshot" href="#">
@@ -109,6 +113,16 @@ footer a:hover{color:var(--ink)}
           <path d="M12 12L3.81 8.26"/><path d="M12 12L7.13 4.43"/>
         </g>
       </svg>
+      <span class="e-omi">powered by
+        <svg class="e-omi-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <g fill="#1C1E20">
+            <circle cx="12" cy="5.46" r="1.62"/><circle cx="16.62" cy="7.38" r="1.62"/>
+            <circle cx="18.54" cy="12" r="1.62"/><circle cx="16.62" cy="16.62" r="1.62"/>
+            <circle cx="12" cy="18.54" r="1.62"/><circle cx="7.38" cy="16.62" r="1.62"/>
+            <circle cx="5.46" cy="12" r="1.62"/><circle cx="7.38" cy="7.38" r="1.62"/>
+          </g>
+        </svg>
+        Omi</span>
     </span>
     <span class="e-desc">Continuous ambient context capturing for Claude.</span>
   </a>
