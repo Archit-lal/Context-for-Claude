@@ -18,7 +18,7 @@
   --disp:'Open Runde',-apple-system,system-ui,sans-serif;
   --mono:'Open Runde',-apple-system,system-ui,sans-serif;
   --paper:#FBF8F4;--ink:#171412;--mid:#6B625B;--faint:#A39A92;
-  --line:#E6DFD6;--bronze:#8F6420;
+  --line:#E6DFD6;--bronze:#8F6420;--red:#C9352B;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -35,50 +35,10 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .say p+p{margin-top:1rem}
 .say b{font-weight:400;color:var(--ink)}
 
-.earshot{position:relative;display:flex;align-items:center;gap:1.4rem;margin-top:3.25rem;padding:1.5rem .1rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-decoration:none;isolation:isolate}
-.earshot::before{content:'';position:absolute;inset:0 -1.5rem;z-index:-1;opacity:0;background:linear-gradient(90deg,rgba(143,100,32,.07),rgba(143,100,32,0) 65%);transition:opacity .35s ease}
-.earshot:hover::before,.earshot:focus-visible::before{opacity:1}
-.earshot::after{content:'';position:absolute;left:0;bottom:-1px;width:0;height:1px;background:var(--bronze);transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.earshot:hover::after,.earshot:focus-visible::after{width:100%}
-
-.e-n{flex:none;align-self:flex-start;padding-top:.35rem;font-size:.62rem;letter-spacing:.14em;color:var(--faint)}
-.e-body{flex:1;min-width:0}
-.e-name{display:block;font-weight:600;font-size:1.35rem;letter-spacing:-.025em;color:var(--ink);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.earshot:hover .e-name{transform:translateX(4px)}
-.e-desc{display:block;margin-top:.1rem;font-size:.95rem;color:var(--mid)}
-
-.e-wave{display:flex;align-items:center;gap:3px;flex:none;height:26px}
-.e-wave i{display:block;width:2px;height:12%;border-radius:1px;background:var(--faint);animation:amb 2.6s ease-in-out infinite;transition:background-color .35s ease}
-.earshot:hover .e-wave i{background:var(--bronze);animation-duration:.85s}
-.e-wave i:nth-child(1){--h:38%;animation-delay:-2.30s}
-.e-wave i:nth-child(2){--h:62%;animation-delay:-1.05s}
-.e-wave i:nth-child(3){--h:30%;animation-delay:-1.80s}
-.e-wave i:nth-child(4){--h:84%;animation-delay:-.35s}
-.e-wave i:nth-child(5){--h:48%;animation-delay:-2.05s}
-.e-wave i:nth-child(6){--h:96%;animation-delay:-.80s}
-.e-wave i:nth-child(7){--h:40%;animation-delay:-1.45s}
-.e-wave i:nth-child(8){--h:72%;animation-delay:-.15s}
-.e-wave i:nth-child(9){--h:34%;animation-delay:-2.50s}
-.e-wave i:nth-child(10){--h:88%;animation-delay:-.95s}
-.e-wave i:nth-child(11){--h:44%;animation-delay:-1.65s}
-.e-wave i:nth-child(12){--h:66%;animation-delay:-.55s}
-.e-wave i:nth-child(13){--h:26%;animation-delay:-2.15s}
-.e-wave i:nth-child(14){--h:52%;animation-delay:-1.25s}
-@keyframes amb{0%,100%{height:12%}50%{height:var(--h,50%)}}
-
-.e-go{flex:none;color:var(--faint);transition:transform .35s cubic-bezier(.2,.8,.2,1),color .35s ease}
-.earshot:hover .e-go{color:var(--bronze);transform:translateX(5px)}
-
-@media (max-width:560px){
-  .earshot{gap:1rem}
-  .e-wave{display:none}
-  .e-name{font-size:1.2rem}
-}
-@media (prefers-reduced-motion:reduce){
-  .e-wave i{animation:none;height:var(--h,50%)}
-  .earshot::after{transition:none}
-  .e-name,.e-go{transition:none}
-}
+.earshot{display:block;margin-top:3.25rem;padding:1.3rem 1.4rem;border:1.5px solid var(--red);border-radius:2px;text-decoration:none}
+.earshot:hover{background:rgba(201,53,43,.05)}
+.e-name{display:block;font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink)}
+.e-desc{display:block;margin-top:.2rem;font-size:.95rem;color:var(--mid)}
 
 .by{display:inline-flex;align-items:center;gap:.7rem;margin-top:3.5rem;color:var(--mid);font-size:.95rem;text-decoration:none}
 .by img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 1px var(--line);transition:box-shadow .18s ease}
@@ -117,13 +77,8 @@ footer a:hover{color:var(--ink)}
   </div>
 
   <a class="earshot" href="#">
-    <span class="e-n">01</span>
-    <span class="e-body">
-      <span class="e-name">Earshot</span>
-      <span class="e-desc">Continuous ambient context capturing for Claude.</span>
-    </span>
-    <span class="e-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-    <span class="e-go" aria-hidden="true">&rarr;</span>
+    <span class="e-name">Earshot</span>
+    <span class="e-desc">Continuous ambient context capturing for Claude.</span>
   </a>
 
   <a class="by" href="https://www.linkedin.com/in/thefuturistsage" target="_blank" rel="noopener noreferrer">
