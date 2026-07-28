@@ -1,0 +1,20 @@
+index.html
+  s_25f8ff007195e3::t_ada030077ba90c 52-53
+  s_25f8ff007195e3::t_ebeb85c43b2556 122-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "50f7f17c6435ebc2b19d943ee8549628de5e3167",
+  "prompts": {},
+  "sessions": {
+    "s_25f8ff007195e3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "821c803f-1e35-4d95-a7a9-e5540fc6492a",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
