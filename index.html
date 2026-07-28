@@ -37,7 +37,7 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .say a{color:var(--bronze);text-decoration:none;border-bottom:1px solid rgba(143,100,32,.35)}
 .say a:hover{border-bottom-color:var(--bronze)}
 
-.earshot{position:relative;display:block;margin-top:3.25rem;padding:1.5rem 1.7rem;text-decoration:none}
+.earshot{position:relative;margin-top:3.25rem;padding:1.5rem 1.7rem}
 .e-frame{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .e-frame path{fill:none;stroke:var(--red);stroke-linecap:round;stroke-linejoin:round}
 .e-s1{stroke-width:2.6}
@@ -45,7 +45,9 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .earshot:hover .e-s1{stroke-width:3.6}
 .earshot:hover .e-s2{stroke-width:2.2;opacity:.65}
 .e-head{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.e-name{font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink)}
+.e-name{font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.e-name::after{content:'';position:absolute;inset:0;z-index:0}
+.e-mark{position:relative;z-index:1;display:inline-flex;padding:4px;margin:-4px;border-radius:5px}
 .e-claude{width:19px;height:19px;flex:none}
 .e-omi{display:inline-flex;align-items:center;gap:.32rem;margin-left:.3rem;font-size:.8rem;color:var(--mid)}
 .e-omi-mark{width:16px;height:16px;flex:none}
@@ -87,7 +89,7 @@ footer a:hover{color:var(--ink)}
     <p><b>So we build for the world where you just exist.</b> The goal is <a href="https://open.substack.com/pub/thefuturistsage/p/manifestation-machines" target="_blank" rel="noopener noreferrer">manifestation machines</a>: intent in, reality out, nothing in between asking for your attention.</p>
   </div>
 
-  <a class="earshot" href="#">
+  <div class="earshot">
     <svg class="e-frame" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <filter id="crayon" x="-10%" y="-30%" width="120%" height="160%">
@@ -104,28 +106,32 @@ footer a:hover{color:var(--ink)}
       </g>
     </svg>
     <span class="e-head">
-      <span class="e-name">Earshot</span>
-      <svg class="e-claude" viewBox="0 0 24 24" aria-hidden="true">
-        <g stroke="#D97757" stroke-width="2.1" stroke-linecap="round">
-          <path d="M12 12L12 3"/><path d="M12 12L16.87 4.43"/><path d="M12 12L20.19 8.26"/>
-          <path d="M12 12L20.91 13.28"/><path d="M12 12L18.8 17.89"/><path d="M12 12L14.54 20.64"/>
-          <path d="M12 12L9.46 20.64"/><path d="M12 12L5.2 17.89"/><path d="M12 12L3.09 13.28"/>
-          <path d="M12 12L3.81 8.26"/><path d="M12 12L7.13 4.43"/>
-        </g>
-      </svg>
-      <span class="e-omi">powered by
-        <svg class="e-omi-mark" viewBox="0 0 24 24" aria-hidden="true">
-          <g fill="#1C1E20">
-            <circle cx="12" cy="5.46" r="1.62"/><circle cx="16.62" cy="7.38" r="1.62"/>
-            <circle cx="18.54" cy="12" r="1.62"/><circle cx="16.62" cy="16.62" r="1.62"/>
-            <circle cx="12" cy="18.54" r="1.62"/><circle cx="7.38" cy="16.62" r="1.62"/>
-            <circle cx="5.46" cy="12" r="1.62"/><circle cx="7.38" cy="7.38" r="1.62"/>
+      <a class="e-name" href="#">Earshot</a>
+      <a class="e-mark" href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer" aria-label="Anthropic">
+        <svg class="e-claude" viewBox="0 0 24 24" aria-hidden="true">
+          <g stroke="#D97757" stroke-width="2.1" stroke-linecap="round">
+            <path d="M12 12L12 3"/><path d="M12 12L16.87 4.43"/><path d="M12 12L20.19 8.26"/>
+            <path d="M12 12L20.91 13.28"/><path d="M12 12L18.8 17.89"/><path d="M12 12L14.54 20.64"/>
+            <path d="M12 12L9.46 20.64"/><path d="M12 12L5.2 17.89"/><path d="M12 12L3.09 13.28"/>
+            <path d="M12 12L3.81 8.26"/><path d="M12 12L7.13 4.43"/>
           </g>
         </svg>
+      </a>
+      <span class="e-omi">powered by
+        <a class="e-mark" href="https://www.omi.me" target="_blank" rel="noopener noreferrer" aria-label="Omi">
+          <svg class="e-omi-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <g fill="#1C1E20">
+              <circle cx="12" cy="5.46" r="1.62"/><circle cx="16.62" cy="7.38" r="1.62"/>
+              <circle cx="18.54" cy="12" r="1.62"/><circle cx="16.62" cy="16.62" r="1.62"/>
+              <circle cx="12" cy="18.54" r="1.62"/><circle cx="7.38" cy="16.62" r="1.62"/>
+              <circle cx="5.46" cy="12" r="1.62"/><circle cx="7.38" cy="7.38" r="1.62"/>
+            </g>
+          </svg>
+        </a>
         Omi</span>
     </span>
     <span class="e-desc">Continuous ambient context capturing for Claude.</span>
-  </a>
+  </div>
 
   <a class="by" href="https://www.linkedin.com/in/thefuturistsage" target="_blank" rel="noopener noreferrer">
     <img src="archit.jpg" alt="Archit Lal" width="44" height="44">
