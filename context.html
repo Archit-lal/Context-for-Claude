@@ -50,19 +50,25 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-off
 .win.dark .chrome{background:#17171A;border-bottom-color:rgba(255,255,255,.07)}
 .win.dark .chrome i{background:#2D2D33}
 .win.dark .chrome .tab{background:#25252A}
+.win img{display:block;width:100%;height:auto}
 .pad{padding:8px}
-.row{display:flex;gap:6px;align-items:center;margin-bottom:6px}
-.dot{width:14px;height:14px;border-radius:50%;flex:none;background:#E5E0D9}
 .ln{height:5px;border-radius:3px;background:#EBE6DF}
-.win.dark .dot{background:#2B2B31}
 .win.dark .ln{background:#25252A}
+/* the two Claude surfaces are drawn, not captured — real text keeps them crisp */
+.term{padding:9px 10px 20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:6px;line-height:1.65;color:#C9CBD4;white-space:nowrap;overflow:hidden}
+.term b{color:#D97757;font-weight:600}
+.term .u{color:#fff}
+.term .d{color:#7C7C86}
+.chat{padding:10px 10px 22px}
+.chat .q{width:fit-content;max-width:78%;margin-left:auto;padding:5px 8px;
+  border-radius:10px 10px 3px 10px;background:#F0EAE1;font-size:6.5px;line-height:1.5;color:var(--ink)}
+.chat .a{display:flex;gap:6px;margin-top:9px}
+.chat .a svg{flex:none;color:#D97757}
+.chat .a p{font-size:6.5px;line-height:1.65;color:var(--mid)}
 .stamp{position:absolute;left:8px;bottom:8px;padding:2px 7px;border-radius:20px;background:#fff;
   border:1px solid rgba(23,20,18,.1);box-shadow:0 2px 6px rgba(23,20,18,.1);
   font-size:8px;font-weight:500;letter-spacing:.02em;color:var(--mid)}
-.tiles{display:flex;gap:4px}
-.tile{flex:1;border-radius:3px}
-.sheet{display:grid;grid-template-columns:repeat(8,1fr);gap:2px}
-.cell{height:7px;border-radius:2px}
 .veil{background:
   radial-gradient(58% 54% at 50% 46%,rgba(251,248,244,.5) 0%,rgba(251,248,244,.28) 46%,rgba(251,248,244,0) 76%),
   linear-gradient(180deg,rgba(251,248,244,.6) 0%,rgba(251,248,244,0) 13% 87%,rgba(251,248,244,.65) 100%)}
@@ -250,242 +256,73 @@ footer a:hover{color:var(--ink)}
     document.getElementById('stream').innerHTML = html;
   })();
 
-  /* ---------- window mocks ---------- */
-  function rows(n, dense){
-    var out = '';
-    for (var i=0;i<n;i++){
-      out += '<div class="row"><span class="dot"></span><div style="flex:1">'+
-             '<div class="ln" style="width:'+(52+(i*17)%38)+'%"></div>'+
-             (dense ? '' : '<div class="ln" style="width:'+(28+(i*23)%42)+'%;margin-top:4px;opacity:.65"></div>')+
-             '</div></div>';
-    }
-    return out;
+  /* ---------- windows: real captures, plus the two Claude surfaces ---------- */
+  function chrome(extra){
+    return '<div class="chrome"><i></i><i></i><i></i><span class="tab"></span>'+(extra||'')+'</div>';
   }
-  function lines(arr, style){
+  function lines(arr){
     return arr.map(function(w){
-      return '<div class="ln" style="width:'+w+'%;margin-bottom:5px;'+(style||'')+'"></div>';
+      return '<div class="ln" style="width:'+w+'%;margin-bottom:5px"></div>';
     }).join('');
   }
-  function tiles(colors, h){
-    return '<div class="tiles">'+colors.map(function(c){
-      return '<span class="tile" style="height:'+h+'px;background:'+c+'"></span>';
-    }).join('')+'</div>';
+  function shot(file, w, stamp, dark){
+    return { w:w, dark:dark, stamp:stamp,
+      html:chrome()+'<img src="shots/'+file+'" alt="" width="540" height="346" decoding="async">' };
   }
-  function candles(){
-    var s = '';
-    for (var i=0;i<21;i++){
-      var up = (i*7)%5 > 2, h = 9 + (i*13)%24, y = 6 + (i*17)%20, c = up ? '#2E9E6B' : '#D1544A';
-      s += '<rect x="'+(i*5.4+4.4)+'" y="'+(y-4)+'" width="0.8" height="'+(h+8)+'" fill="'+c+'" opacity=".6"/>'+
-           '<rect x="'+(i*5.4+3)+'" y="'+y+'" width="3.4" height="'+h+'" rx="1" fill="'+c+'"/>';
-    }
-    return '<svg viewBox="0 0 118 56" style="display:block;width:100%;height:58px">'+s+'</svg>';
-  }
-  var PIE = '<svg viewBox="0 0 40 40" style="width:42px;height:42px;flex:none">'+
-    '<circle cx="20" cy="20" r="15" fill="#4285F4"/>'+
-    '<path d="M20 20V5a15 15 0 0 1 13 22.5z" fill="#F4B400"/>'+
-    '<path d="M20 20l13 7.5A15 15 0 0 1 7.5 28z" fill="#DB4437"/></svg>';
-
-  var LOGO = {
-    mail:'<svg viewBox="0 0 24 24" width="11" height="11" style="margin-left:auto;flex:none"><path fill="#EA4335" d="M3 7.2 12 13.5l9-6.3v9.3A1.5 1.5 0 0 1 19.5 18h-15A1.5 1.5 0 0 1 3 16.5z"/><path fill="#4285F4" d="M4.5 6h15A1.5 1.5 0 0 1 21 7.2L12 13.5 3 7.2A1.5 1.5 0 0 1 4.5 6z"/></svg>',
-    x:'<svg viewBox="0 0 24 24" width="10" height="10" fill="#fff" style="margin-left:auto;flex:none"><path d="M18.24 2.25h3.31l-7.23 8.26 8.51 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23z"/></svg>',
-    spotify:'<svg viewBox="0 0 24 24" width="12" height="12" style="margin-left:auto;flex:none"><circle cx="12" cy="12" r="11" fill="#1DB954"/><g stroke="#0c0c0c" stroke-width="1.7" stroke-linecap="round" fill="none"><path d="M6.6 9.3c3.6-1.1 7.6-.7 10.8 1.1"/><path d="M7.5 12.5c2.9-.9 6.3-.6 9 .9"/><path d="M8.4 15.5c2.3-.7 4.9-.5 7 .7"/></g></svg>',
-    youtube:'<svg viewBox="0 0 24 24" width="13" height="13" style="margin-left:auto;flex:none"><rect x="1.5" y="5" width="21" height="14" rx="4.2" fill="#FF0000"/><path d="M10 9.3 15.6 12 10 14.7z" fill="#fff"/></svg>',
-    sheets:'<svg viewBox="0 0 24 24" width="10" height="10" style="margin-left:auto;flex:none"><rect x="3.5" y="2" width="17" height="20" rx="2.4" fill="#0F9D58"/><g fill="#fff"><rect x="7" y="7" width="10" height="1.5"/><rect x="7" y="10.6" width="10" height="1.5"/><rect x="7" y="14.2" width="10" height="1.5"/><rect x="11.3" y="7" width="1.5" height="8.7"/></g></svg>',
-    netflix:'<span style="margin-left:auto;font-size:8px;font-weight:600;letter-spacing:.14em;color:#E50914">NETFLIX</span>',
-    code:'<span style="margin-left:auto;display:inline-flex;color:#D97757"><svg width="15" height="15"><use href="#ic-claude-code"/></svg></span>',
-    claude:'<span style="margin-left:auto;display:inline-flex;color:#D97757"><svg width="12" height="12"><use href="#ic-claude"/></svg></span>',
-    cal:'<svg viewBox="0 0 24 24" width="11" height="11" style="margin-left:auto;flex:none"><rect x="3" y="4.5" width="18" height="16" rx="2.4" fill="#fff" stroke="#DADCE0" stroke-width="1.4"/><rect x="3" y="4.5" width="18" height="4" rx="2" fill="#4285F4"/><rect x="6.5" y="11" width="4" height="3" rx=".8" fill="#EA4335"/><rect x="13" y="15" width="4.5" height="3" rx=".8" fill="#34A853"/></svg>',
-    chat:'<svg viewBox="0 0 24 24" width="11" height="11" style="margin-left:auto;flex:none"><rect x="2.5" y="3.5" width="19" height="14" rx="4" fill="#5865F2"/><path d="M8 17.5h4l-3 3.5z" fill="#5865F2"/></svg>',
-    figma:'<span style="margin-left:auto;display:inline-flex;gap:2px"><i style="width:6px;height:6px;border-radius:50%;background:#F24E1E"></i><i style="width:6px;height:6px;border-radius:50%;background:#A259FF"></i><i style="width:6px;height:6px;border-radius:50%;background:#1ABCFE"></i></span>',
-    chart:'<span style="margin-left:auto;font-size:8px;font-weight:600;letter-spacing:.06em;color:#8A8A93">NDX</span>',
-    doc:'<svg viewBox="0 0 24 24" width="10" height="10" style="margin-left:auto;flex:none"><rect x="4" y="2.5" width="16" height="19" rx="2" fill="#4285F4"/><g fill="#fff"><rect x="7.5" y="7" width="9" height="1.4"/><rect x="7.5" y="10.4" width="9" height="1.4"/><rect x="7.5" y="13.8" width="6" height="1.4"/></g></svg>'
-  };
-
-  function chrome(logo){
-    return '<div class="chrome"><i></i><i></i><i></i><span class="tab"></span>'+(logo||'')+'</div>';
-  }
+  var CC = '<span style="margin-left:auto;display:inline-flex;color:#D97757"><svg width="15" height="15"><use href="#ic-claude-code"/></svg></span>';
+  var CL = '<span style="margin-left:auto;display:inline-flex;color:#D97757"><svg width="12" height="12"><use href="#ic-claude"/></svg></span>';
 
   var KINDS = [
-    /* mail: inbox + reading pane */
-    {w:252,stamp:'09:14',html:chrome(LOGO.mail)+
-      '<div style="display:flex;height:126px">'+
-        '<div style="width:45%;padding:7px;border-right:1px solid rgba(23,20,18,.07)">'+
-          '<div class="ln" style="width:100%;height:9px;border-radius:5px;margin-bottom:8px"></div>'+rows(4)+
-        '</div>'+
-        '<div style="flex:1;padding:8px">'+
-          '<div class="ln" style="width:66%;height:7px;background:#DED8D0;margin-bottom:8px"></div>'+
-          lines([94,88,96,72,90,64,84,58])+
+    shot('youtube.jpg',   264, '17:12', 0),
+    shot('x.jpg',         258, '12:02', 0),
+    shot('pinterest.jpg', 248, '20:15', 0),
+
+    /* an agent working in the terminal */
+    {w:232,dark:1,stamp:'16:41',html:chrome(CC)+
+      '<div class="term">'+
+        '<div class="d">~/periphery</div>'+
+        '<div><span class="d">$</span> <b>claude</b></div>'+
+        '<div><b>&#10033;</b> context connected &middot; 6 h 12 m of memory</div>'+
+        '<div class="u">&gt; what did I change in the hero yesterday?</div>'+
+        '<div class="d">&bull; searching your context&hellip;</div>'+
+        '<div>&bull; 3 commits touched the hero copy</div>'+
+        '<div class="d">&nbsp;&nbsp;16:22 &mdash; reworded the subhead</div>'+
+        '<div class="d">&nbsp;&nbsp;16:48 &mdash; swapped the download label</div>'+
+        '<div class="d">&nbsp;&nbsp;17:03 &mdash; centred the hero</div>'+
+        '<div class="u">&gt; &#9611;</div>'+
+      '</div>'},
+
+    shot('netflix.jpg',   252, '21:38', 1),
+    shot('spotify.jpg',   248, '13:07', 1),
+    shot('airbnb.jpg',    256, '22:04', 0),
+    shot('maps.jpg',      250, '09:41', 0),
+    shot('dribbble.jpg',  244, '19:03', 0),
+
+    /* a conversation with Claude */
+    {w:242,stamp:'18:26',html:chrome(CL)+
+      '<div class="chat">'+
+        '<div class="q">what did I read about ambient computing this week?</div>'+
+        '<div class="a">'+
+          '<svg width="13" height="13"><use href="#ic-claude"/></svg>'+
+          '<p>You spent 41 minutes on it across three sources &mdash; a paper on Tuesday '+
+          'morning, two long threads that afternoon, and a talk you rewatched last night. '+
+          'The thread you kept coming back to argued the screen is the bottleneck.</p>'+
         '</div>'+
       '</div>'},
 
-    /* social feed */
-    {w:262,dark:1,stamp:'12:02',html:chrome(LOGO.x)+
-      '<div style="display:flex;height:132px">'+
-        '<div style="width:18px;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:7px">'+
-          '<i style="width:8px;height:8px;border-radius:50%;background:#2C2C31"></i>'+
-          '<i style="width:8px;height:8px;border-radius:50%;background:#2C2C31"></i>'+
-          '<i style="width:8px;height:8px;border-radius:50%;background:#1D9BF0"></i>'+
-          '<i style="width:8px;height:8px;border-radius:50%;background:#2C2C31"></i>'+
-          '<i style="width:8px;height:8px;border-radius:50%;background:#2C2C31"></i>'+
-        '</div>'+
-        '<div style="flex:1;padding:7px 8px;border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06)">'+
-          '<div class="row"><span class="dot"></span><div style="flex:1"><div class="ln" style="width:52%"></div><div class="ln" style="width:34%;margin-top:4px;opacity:.6"></div></div></div>'+
-          '<div style="height:58px;border-radius:5px;background:linear-gradient(135deg,#1B3B2A,#2E9E6B 55%,#12281D)"></div>'+
-          '<div style="display:flex;gap:12px;margin-top:7px">'+
-            '<span class="ln" style="width:18px"></span><span class="ln" style="width:18px"></span>'+
-            '<span class="ln" style="width:18px"></span><span class="ln" style="width:18px"></span>'+
-          '</div>'+
-        '</div>'+
-        '<div style="width:31%;padding:7px">'+
-          '<div class="ln" style="width:88%;height:8px;border-radius:5px;margin-bottom:7px"></div>'+
-          lines([70,46,80,52,66,44],'opacity:.85')+
-        '</div>'+
-      '</div>'},
-
-    /* streaming rows */
-    {w:250,dark:1,stamp:'21:38',html:chrome(LOGO.netflix)+
-      '<div class="pad">'+
-        '<div style="height:52px;border-radius:5px;background:linear-gradient(115deg,#2A1114,#701018 45%,#1A0A0C);margin-bottom:8px"></div>'+
-        '<div class="ln" style="width:34%;margin-bottom:6px"></div>'+
-        tiles(['linear-gradient(160deg,#3B2440,#7A3B8F)','linear-gradient(160deg,#123444,#1E6F8C)','linear-gradient(160deg,#3E1F1B,#8E3A2C)','linear-gradient(160deg,#1E3324,#2F7A4B)','linear-gradient(160deg,#332C1A,#8A7226)'],40)+
-      '</div>'},
-
-    /* music */
-    {w:242,dark:1,stamp:'13:07',html:chrome(LOGO.spotify)+
-      '<div style="display:flex;height:118px">'+
-        '<div style="width:34%;padding:7px;border-right:1px solid rgba(255,255,255,.06)">'+
-          '<div class="ln" style="width:70%;height:7px;margin-bottom:8px"></div>'+rows(3,1)+
-        '</div>'+
-        '<div style="flex:1;padding:7px">'+
-          '<div class="ln" style="width:46%;margin-bottom:7px"></div>'+
-          '<div style="display:flex;gap:6px;margin-bottom:9px">'+
-            '<span style="width:26px;height:26px;border-radius:50%;background:#5B3A2E;flex:none"></span>'+
-            '<span style="width:26px;height:26px;border-radius:50%;background:#2E4257;flex:none"></span>'+
-            '<span style="width:26px;height:26px;border-radius:50%;background:#3C2F52;flex:none"></span>'+
-            '<span style="width:26px;height:26px;border-radius:50%;background:#264438;flex:none"></span>'+
-          '</div>'+
-          '<div style="display:flex;align-items:center;gap:6px">'+
-            '<span style="width:14px;height:14px;border-radius:50%;background:#1DB954;flex:none"></span>'+
-            '<span class="ln" style="flex:1;height:3px;background:linear-gradient(90deg,#1DB954 38%,#2A2A30 38%)"></span>'+
-          '</div>'+
-        '</div>'+
-      '</div>'},
-
-    /* spreadsheet */
-    {w:236,stamp:'15:26',html:chrome(LOGO.sheets)+
-      '<div class="pad">'+
-        '<div style="display:flex;gap:4px;margin-bottom:7px">'+lines([9,9,9,9,22],'height:6px;margin-bottom:0')+'</div>'+
-        '<div class="sheet" style="margin-bottom:8px">'+
-          (function(){
-            var c = '', fills = ['#F2EFEA','#F2EFEA','#DDF0E4','#F2EFEA','#DCE8FA','#F2EFEA','#F2EFEA','#FBEBD3'];
-            for (var i=0;i<48;i++) c += '<span class="cell" style="background:'+fills[(i*3)%8]+'"></span>';
-            return c;
-          })()+
-        '</div>'+
-        '<div style="display:flex;align-items:center;gap:8px">'+PIE+
-          '<div style="flex:1">'+lines([70,52,84],'height:4px')+'</div>'+
-        '</div>'+
-      '</div>'},
-
-    /* agent in the terminal */
-    {w:224,dark:1,stamp:'16:41',html:chrome(LOGO.code)+
-      '<div class="pad" style="padding:9px">'+
-        [['#D97757',34],['#C9CBD4',72],['#C9CBD4',58],['#6FA8DC',44],['#C9CBD4',80],
-         ['#C9CBD4',66],['#D97757',52],['#2E9E6B',30],['#C9CBD4',74],['#C9CBD4',48]]
-          .map(function(p){ return '<div class="ln" style="width:'+p[1]+'%;background:'+p[0]+';opacity:.55;margin-bottom:6px"></div>'; }).join('')+
-      '</div>'},
-
-    /* assistant conversation */
-    {w:238,stamp:'18:26',html:chrome(LOGO.claude)+
-      '<div class="pad" style="padding:10px">'+
-        '<div style="display:flex;justify-content:flex-end;margin-bottom:9px">'+
-          '<span style="width:58%;height:20px;border-radius:11px 11px 3px 11px;background:#F0EAE1"></span>'+
-        '</div>'+
-        '<div style="display:flex;gap:7px">'+
-          '<span style="display:inline-flex;flex:none;color:#D97757"><svg width="14" height="14"><use href="#ic-claude"/></svg></span>'+
-          '<div style="flex:1">'+lines([96,88,74,92,66])+'</div>'+
-        '</div>'+
-      '</div>'},
-
-    /* market chart */
-    {w:246,stamp:'10:55',html:chrome(LOGO.chart)+
-      '<div class="pad">'+
-        '<div style="display:flex;justify-content:space-between;margin-bottom:6px">'+
-          '<span class="ln" style="width:38px;height:6px"></span><span class="ln" style="width:26px;height:6px"></span>'+
-        '</div>'+candles()+
-        '<div style="display:flex;gap:5px;margin-top:7px">'+lines([16,16,16,16,16],'height:4px;margin-bottom:0')+'</div>'+
-      '</div>'},
-
-    /* document */
-    {w:184,stamp:'11:31',html:chrome(LOGO.doc)+
-      '<div class="pad" style="padding:10px 12px">'+
-        '<div class="ln" style="width:56%;height:6px;background:#DED8D0;margin:0 auto 9px"></div>'+
-        lines([100,94,98,88,100,72,96,90,100,64,92,84],'height:3.5px;margin-bottom:4px')+
-      '</div>'},
-
-    /* calendar */
-    {w:228,stamp:'08:47',html:chrome(LOGO.cal)+
-      '<div class="pad">'+
-        '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px">'+
-          lines([100,100,100,100,100,100,100],'height:4px;margin-bottom:0')+
-        '</div>'+
-        '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;height:96px">'+
-          (function(){
-            var out = '', ev = {1:['#8F6420',26],2:['#4285F4',40],3:['#C9352B',18],4:['#2E9E6B',52],5:['#4285F4',30]};
-            for (var d=0;d<7;d++){
-              var e = ev[d];
-              out += '<div style="background:#F5F2ED;border-radius:3px;position:relative">'+
-                (e ? '<span style="position:absolute;left:1px;right:1px;top:'+(8+d*7)+'px;height:'+e[1]+'px;border-radius:2px;background:'+e[0]+';opacity:.55"></span>' : '')+
-                '</div>';
-            }
-            return out;
-          })()+
-        '</div>'+
-      '</div>'},
-
-    /* video */
-    {w:264,dark:1,stamp:'17:12',html:chrome(LOGO.youtube)+
-      '<div style="display:flex;height:126px">'+
-        '<div style="flex:1;padding:7px">'+
-          '<div style="height:74px;border-radius:5px;background:linear-gradient(125deg,#241540,#5B2E8F 40%,#1B2B52 75%,#0E1730);position:relative">'+
-            '<span style="position:absolute;left:6px;right:6px;bottom:6px;height:3px;border-radius:2px;background:linear-gradient(90deg,#FF0000 42%,rgba(255,255,255,.28) 42%)"></span>'+
-          '</div>'+
-          '<div class="ln" style="width:78%;margin-top:8px"></div>'+
-          '<div class="ln" style="width:48%;margin-top:5px;opacity:.6"></div>'+
-        '</div>'+
-        '<div style="width:33%;padding:7px;border-left:1px solid rgba(255,255,255,.06)">'+
-          (function(){
-            var out = '';
-            for (var i=0;i<3;i++){
-              out += '<div style="margin-bottom:8px">'+
-                '<div style="height:22px;border-radius:3px;background:#22222A"></div>'+
-                '<div class="ln" style="width:84%;margin-top:4px;height:4px"></div>'+
-                '<div class="ln" style="width:54%;margin-top:3px;height:4px;opacity:.6"></div></div>';
-            }
-            return out;
-          })()+
-        '</div>'+
-      '</div>'},
-
-    /* team chat */
-    {w:244,dark:1,stamp:'14:19',html:chrome(LOGO.chat)+
-      '<div style="display:flex;height:120px">'+
-        '<div style="width:30%;padding:7px;background:rgba(255,255,255,.02)">'+lines([64,80,52,72,58,76,48],'height:4px')+'</div>'+
-        '<div style="flex:1;padding:7px">'+rows(4)+'</div>'+
-      '</div>'},
-
-    /* design canvas */
-    {w:238,stamp:'19:03',html:chrome(LOGO.figma)+
-      '<div style="height:112px;padding:9px;background:#F4F1EC;position:relative">'+
-        '<span style="position:absolute;left:14px;top:14px;width:62px;height:44px;border-radius:6px;background:#fff;box-shadow:0 2px 8px rgba(23,20,18,.1)"></span>'+
-        '<span style="position:absolute;left:88px;top:26px;width:54px;height:54px;border-radius:50%;background:linear-gradient(150deg,#A259FF,#1ABCFE);opacity:.8"></span>'+
-        '<span style="position:absolute;right:16px;top:16px;width:48px;height:70px;border-radius:6px;background:#fff;box-shadow:0 2px 8px rgba(23,20,18,.1)"></span>'+
-        '<span style="position:absolute;left:20px;bottom:14px;width:96px;height:5px;border-radius:3px;background:#DFD9D1"></span>'+
-      '</div>'}
+    shot('figma.jpg',     242, '15:52', 0),
+    shot('twitch.jpg',    246, '23:18', 1),
+    shot('applemusic.jpg',240, '11:26', 0),
+    shot('chart.jpg',     250, '10:55', 0),
+    shot('github.jpg',    254, '16:08', 0),
+    shot('hn.jpg',        236, '08:47', 0),
+    shot('wiki.jpg',      238, '11:31', 0),
+    shot('linear.jpg',    248, '14:19', 1),
+    shot('notion.jpg',    242, '15:26', 0)
   ];
 
   /* drift the windows down either margin, clear of the centre column */
-  var XS = [2,7,12,17,84,89,93,98,4,10,86,96,14,91,6,81,9,79];
+  var XS = [2,7,12,17,84,89,93,98,4,10,86,96,14,91,6,81,9,79,76];
   var w = window.innerWidth;
   var frag = '', count = w < 700 ? 8 : (w < 1100 ? 12 : XS.length);
   for (var i=0;i<count;i++){
