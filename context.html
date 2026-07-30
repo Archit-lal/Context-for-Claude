@@ -123,18 +123,18 @@ h1 span{color:var(--faint)}
 .ask-bar i:nth-of-type(3){background:#4FBE6B}
 .ask-path{margin-left:6px;font-size:.66rem;color:#75757F;letter-spacing:.02em}
 .ask-cc{margin-left:auto;display:inline-flex;color:#D97757}
-.ask-body{padding:12px 14px 15px;font-size:.83rem;line-height:1.8;color:#C4C6D0}
+.ask-body{height:10rem;overflow:hidden;scroll-behavior:smooth;
+  padding:12px 14px 14px;font-size:.83rem;line-height:1.8;color:#C4C6D0}
 .ask-body .d{color:#6C6C76}
 .ask-body .cmd{color:#D97757;font-weight:600}
 .ask-body .mk{color:#D97757}
 .ask-body b{color:#fff;font-weight:600}
-.ask-q{margin-top:.1rem;color:#fff;white-space:nowrap;overflow:hidden}
+.ask-q{margin-top:.1rem;color:#fff;white-space:nowrap;overflow:hidden;padding-right:5rem}
 .ask-q .ar{color:#D97757}
 .caret{display:inline-block;width:1.5px;height:1.02em;margin-left:1px;vertical-align:-.14em;
   background:#D97757;animation:blink 1.05s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.ask-out{min-height:3.2rem;margin-top:.25rem;color:#A6A8B2;opacity:0;transition:opacity .25s ease}
-.ask-out.on{opacity:1}
+.ask-out{color:#A6A8B2}
 .ask-out .bul{color:#D97757}
 .ask-out b{color:#fff;font-weight:600}
 .send{position:absolute;right:11px;bottom:11px;padding:3px 8px;cursor:pointer;
@@ -167,6 +167,7 @@ footer a:hover svg{color:var(--bronze)}
 @media (prefers-reduced-motion:reduce){
   .win,.sl{animation-play-state:paused}
   .caret{animation:none}
+  .ask-body{scroll-behavior:auto}
   .dl:hover{transform:none}
   .dl:hover::before,.dl:hover svg{animation:none}
   .built:hover svg{transform:none}
@@ -253,11 +254,11 @@ footer a:hover svg{color:var(--bronze)}
       <span class="ask-path">claude &mdash; ~/periphery</span>
       <span class="ask-cc" aria-hidden="true"><svg width="15" height="15"><use href="#ic-claude-code"/></svg></span>
     </div>
-    <div class="ask-body">
-      <div><span class="d">$</span> <span class="cmd">claude</span></div>
-      <div><span class="mk">&#10033;</span> context connected &middot; <b>6 h 12 m</b> of memory</div>
-      <div class="ask-q"><span class="ar">&gt;</span> <span id="askTyped"></span><span class="caret" id="caret"></span></div>
-      <div class="ask-out" id="answer" aria-live="polite"></div>
+    <div class="ask-body" id="askBody">
+      <div class="ask-scroll" id="askScroll" aria-live="polite">
+        <div><span class="d">$</span> <span class="cmd">claude</span></div>
+        <div><span class="mk">&#10033;</span> context connected &middot; <b>6 h 12 m</b> of memory</div>
+      </div>
     </div>
     <button class="send" type="submit">&#9166; enter</button>
   </form>
@@ -370,21 +371,34 @@ footer a:hover svg{color:var(--bronze)}
     shot('duolingo.jpg',  240, '19:36', 0)
   ];
 
-  /* drift the windows down either margin, clear of the centre column */
-  var XS = [2,5,8,11,14,17,20,3.5,9.5,15.5,6.5,
-            80,83,86,89,92,95,98,81.5,87.5,93.5,84.5];
-  var w = window.innerWidth;
-  var frag = '', count = w < 700 ? 8 : (w < 1100 ? 13 : XS.length);
+  /* ---------- placement ----------
+     Windows rise up a few lanes down either margin, clear of the centre column.
+     Lanes sit a window-width apart, and each lane's windows are spread evenly
+     through the cycle, so one leaves before the next arrives instead of the
+     whole set piling up on top of each other. */
+  var vw = window.innerWidth;
+  var colW = Math.min(47 * 16, vw);
+  var margin = Math.max(0, (vw - colW) / 2);
+  var perSide = Math.max(1, Math.floor(margin / 160));
+  var target = vw < 700 ? 6 : 12;
+  var perLane = Math.max(2, Math.min(5, Math.round(target / (perSide * 2))));
+
+  var lanes = [];
+  for (var n = 0; n < perSide; n++){
+    var off = margin * (n + 0.5) / perSide;
+    lanes.push(off / vw * 100);
+    lanes.push((vw - off) / vw * 100);
+  }
+  var count = lanes.length * perLane;
 
   /* shuffle, so a different set of apps drifts past on each visit */
   var pool = KINDS.slice();
-  for (var s = pool.length - 1; s > 0; s--){
-    var r = Math.floor(Math.random() * (s + 1)), tmp = pool[s];
-    pool[s] = pool[r]; pool[r] = tmp;
+  for (var sh = pool.length - 1; sh > 0; sh--){
+    var r = Math.floor(Math.random() * (sh + 1)), tmp = pool[sh];
+    pool[sh] = pool[r]; pool[r] = tmp;
   }
   /* the two drawn Claude windows always make the cut */
-  KINDS.filter(function(k){ return !k.html.indexOf || k.html.indexOf('<img') === -1; })
-       .forEach(function(k){
+  KINDS.filter(function(k){ return k.html.indexOf('<img') === -1; }).forEach(function(k){
     var at = pool.indexOf(k);
     if (at >= count){
       var into = Math.floor(Math.random() * count);
@@ -392,12 +406,21 @@ footer a:hover svg{color:var(--bronze)}
     }
   });
 
-  for (var i=0;i<count;i++){
-    var k = pool[i % pool.length], dur = rnd(15,27);
-    frag += '<div class="win'+(k.dark ? ' dark' : '')+'" style="'+
-      '--x:'+XS[i]+'%;--w:'+k.w+'px;--s:'+rnd(.58,.94).toFixed(2)+';--rot:'+rnd(-2.6,2.6).toFixed(2)+'deg;'+
-      '--op:'+rnd(.8,1).toFixed(2)+';--dur:'+dur.toFixed(1)+'s;--delay:-'+rnd(0,dur).toFixed(1)+'s">'+
-      k.html+'<span class="stamp">'+k.stamp+'</span></div>';
+  var frag = '', idx = 0;
+  for (var L = 0; L < lanes.length; L++){
+    var dur = rnd(17, 26);
+    for (var j2 = 0; j2 < perLane; j2++){
+      var k = pool[idx % pool.length];
+      /* even spacing through the lane, with a touch of jitter */
+      var frac = Math.max(0, (j2 + rnd(-.14, .14)) / perLane);
+      frag += '<div class="win' + (k.dark ? ' dark' : '') + '" style="' +
+        '--x:' + lanes[L].toFixed(2) + '%;--w:' + k.w + 'px;' +
+        '--s:' + rnd(.64, .88).toFixed(2) + ';--rot:' + rnd(-2.2, 2.2).toFixed(2) + 'deg;' +
+        '--op:' + rnd(.82, 1).toFixed(2) + ';--dur:' + dur.toFixed(1) + 's;' +
+        '--delay:-' + (dur * frac).toFixed(1) + 's">' +
+        k.html + '<span class="stamp">' + k.stamp + '</span></div>';
+      idx++;
+    }
   }
   document.getElementById('windows').innerHTML = frag;
 
@@ -439,33 +462,54 @@ footer a:hover svg{color:var(--bronze)}
     requestAnimationFrame(up);
   }
 
-  /* ---------- animated ask ---------- */
+  /* ---------- the session ----------
+     Each question is answered and left in the scrollback; the next prompt is
+     appended underneath and the view scrolls, the way a real session reads.
+     Nothing is ever un-typed. */
   var QA = [
-    ['what did I get done today?','Shipped the capture pipeline, cleared two reviews and sat in three calls — <b>6 h 12 m of context</b> across nine apps.'],
+    ['what did I get done today?','Shipped the capture pipeline, cleared two reviews and sat in three calls &mdash; <b>6 h 12 m of context</b> across nine apps.'],
     ['who did I talk to about the demo?','<b>Maya at 10:40</b> in chat, then Dev on the 2 pm call. Both landed on Thursday.'],
-    ['find that pricing page I read on tuesday','Found it — open at <b>16:22 on Tuesday</b>, right before you compared two plans for nine minutes.'],
+    ['find that pricing page I read on tuesday','Found it &mdash; open at <b>16:22 on Tuesday</b>, right before you compared two plans for nine minutes.'],
     ['what was I reading before lunch?','A spec on background capture, plus the <b>four tabs</b> you left open behind it.']
   ];
-  var typed  = document.getElementById('askTyped'),
-      caret  = document.getElementById('caret'),
-      answer = document.getElementById('answer'),
+
+  var body   = document.getElementById('askBody'),
+      scroll = document.getElementById('askScroll'),
       form   = document.getElementById('ask');
-  var qi = 0, ci = 0, timer = null, phase = 'type';
+  var qi = 0, ci = 0, timer = null, phase = 'type', typed = null, promptLine = null;
+
+  function toBottom(){ body.scrollTop = body.scrollHeight; }
+
+  function addLine(html, cls){
+    var el = document.createElement('div');
+    if (cls) el.className = cls;
+    el.innerHTML = html;
+    scroll.appendChild(el);
+    toBottom();
+    return el;
+  }
+
+  function newPrompt(){
+    promptLine = addLine('<span class="ar">&gt;</span> <span class="t"></span>' +
+                         '<span class="caret"></span>', 'ask-q');
+    typed = promptLine.querySelector('.t');
+    ci = 0;
+  }
+
+  /* let the scrollback fall off the top rather than grow forever */
+  function trim(){
+    while (scroll.children.length > 16) scroll.removeChild(scroll.firstChild);
+  }
 
   function step(){
     var q = QA[qi][0];
     if (phase === 'type'){
       typed.textContent = q.slice(0, ++ci);
-      if (ci >= q.length){ phase = 'hold'; timer = setTimeout(step, 950); }
-      else timer = setTimeout(step, 42 + Math.random()*38);
-      return;
+      toBottom();
+      if (ci >= q.length){ phase = 'hold'; timer = setTimeout(step, 900); }
+      else timer = setTimeout(step, 42 + Math.random() * 38);
     }
-    if (phase === 'hold'){ send(); return; }
-    if (phase === 'clear'){
-      typed.textContent = q.slice(0, --ci);
-      if (ci <= 0){ qi = (qi+1) % QA.length; phase = 'type'; timer = setTimeout(step, 340); }
-      else timer = setTimeout(step, 16);
-    }
+    else if (phase === 'hold'){ send(); }
   }
 
   function send(){
@@ -473,30 +517,37 @@ footer a:hover svg{color:var(--bronze)}
     var pair = QA[qi];
     typed.textContent = pair[0];
     ci = pair[0].length;
-    answer.innerHTML = '<div class="d">&bull; searching your context&hellip;</div>';
-    answer.classList.add('on');
+    var c = promptLine.querySelector('.caret');
+    if (c) c.remove();                       // this line is history now
+    phase = 'wait';
+
+    var thinking = addLine('&bull; searching your context&hellip;', 'd');
     rush();
-    phase = 'clear';
+
     timer = setTimeout(function(){
-      answer.innerHTML = '<div><span class="bul">&#9210;</span> ' + pair[1] + '</div>';
+      thinking.remove();
+      addLine('<span class="bul">&#9210;</span> ' + pair[1], 'ask-out');
       timer = setTimeout(function(){
-        answer.classList.remove('on');
-        timer = setTimeout(step, 320);
-      }, 3200);
+        qi = (qi + 1) % QA.length;
+        trim();
+        newPrompt();
+        phase = 'type';
+        timer = setTimeout(step, 420);
+      }, 3000);
     }, 640);
   }
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    if (phase === 'clear'){ rush(); return; }
-    send();
+    if (phase === 'type' || phase === 'hold') send();
+    else rush();
   });
 
+  newPrompt();
   if (reduce){
     typed.textContent = QA[0][0];
-    answer.innerHTML = '<div><span class="bul">&#9210;</span> ' + QA[0][1] + '</div>';
-    answer.classList.add('on');
-    caret.style.display = 'none';
+    promptLine.querySelector('.caret').remove();
+    addLine('<span class="bul">&#9210;</span> ' + QA[0][1], 'ask-out');
   } else {
     step();
   }
