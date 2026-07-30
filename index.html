@@ -46,7 +46,8 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.9rem,5.6vw,3.1rem);
 .e-name{font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
 .e-name::after{content:'';position:absolute;inset:0;z-index:0}
 .e-mark{position:relative;z-index:1;display:inline-flex;padding:4px;margin:-4px;border-radius:5px}
-.e-claude{width:19px;height:19px;flex:none}
+.e-claude{width:19px;height:19px;flex:none;color:#D97757}
+.e-cc{width:20px;height:20px;flex:none;color:#D97757}
 .e-meta{display:flex;align-items:center;flex-wrap:wrap;gap:.3rem;margin-top:.85rem;font-size:.78rem;color:var(--faint)}
 .e-omi-mark,.e-peri-mark{width:14px;height:14px;flex:none;color:var(--mid)}
 .e-desc{display:block;margin-top:.2rem;font-size:.95rem;color:var(--mid)}
@@ -63,6 +64,30 @@ footer a:hover{color:var(--ink)}
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="ic-claude" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <circle cx="50" cy="50" r="9"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(31 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(59 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(92 50 50)"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(121 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(151 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(180 50 50)"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(211 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(239 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(268 50 50)"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(299 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(331 50 50)"/>
+    </g>
+  </symbol>
+  <symbol id="ic-claude-code" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M2 3.2h12v8H2Zm2 2h1v2.2H4Zm7 0h1v2.2h-1ZM0 7.4h2v2H0Zm14 0h2v2h-2ZM3 11.2h1v2.2H3Zm2 0h1v2.2H5Zm5 0h1v2.2h-1Zm2 0h1v2.2h-1Z"/>
+  </symbol>
+</svg>
+
 <main>
 
   <div class="mark">
@@ -102,15 +127,11 @@ footer a:hover{color:var(--ink)}
     </svg>
     <span class="e-head">
       <a class="e-name" href="context.html">Context for Claude</a>
-      <a class="e-mark" href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer" aria-label="Anthropic">
-        <svg class="e-claude" viewBox="0 0 24 24" aria-hidden="true">
-          <g stroke="#D97757" stroke-width="2.1" stroke-linecap="round">
-            <path d="M12 12L12 3"/><path d="M12 12L16.87 4.43"/><path d="M12 12L20.19 8.26"/>
-            <path d="M12 12L20.91 13.28"/><path d="M12 12L18.8 17.89"/><path d="M12 12L14.54 20.64"/>
-            <path d="M12 12L9.46 20.64"/><path d="M12 12L5.2 17.89"/><path d="M12 12L3.09 13.28"/>
-            <path d="M12 12L3.81 8.26"/><path d="M12 12L7.13 4.43"/>
-          </g>
-        </svg>
+      <a class="e-mark" href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer" aria-label="Claude">
+        <svg class="e-claude" aria-hidden="true"><use href="#ic-claude"/></svg>
+      </a>
+      <a class="e-mark" href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener noreferrer" aria-label="Claude Code">
+        <svg class="e-cc" aria-hidden="true"><use href="#ic-claude-code"/></svg>
       </a>
     </span>
     <span class="e-desc">Continuous ambient context capturing for Claude.</span>

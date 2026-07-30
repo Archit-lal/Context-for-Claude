@@ -83,7 +83,13 @@ h1{font-family:var(--disp);font-weight:600;font-size:clamp(2rem,5.6vw,3.35rem);l
 h1 span{color:var(--faint)}
 .sub{margin:1.5rem auto 0;max-width:34rem;color:var(--mid);font-size:1.02rem}
 
-.dl{display:inline-flex;align-items:center;gap:.6rem;margin-top:2.25rem;padding:.85rem 1.6rem;
+.works{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.4rem .95rem;margin-top:1.7rem;
+  font-size:.68rem;font-weight:500;letter-spacing:.11em;text-transform:uppercase;color:var(--mid)}
+.works .wl{color:var(--faint)}
+.works .wi{display:inline-flex;align-items:center;gap:.38rem}
+.works .wi svg{flex:none;color:#D97757}
+
+.dl{display:inline-flex;align-items:center;gap:.6rem;margin-top:2.1rem;padding:.85rem 1.6rem;
   background:var(--ink);color:var(--paper);border-radius:999px;text-decoration:none;
   font-weight:600;font-size:1rem;letter-spacing:-.01em;
   box-shadow:0 10px 24px -12px rgba(23,20,18,.55);transition:transform .18s ease,box-shadow .18s ease}
@@ -140,6 +146,29 @@ footer a:hover{color:var(--ink)}
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="ic-claude" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <circle cx="50" cy="50" r="9"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(31 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(59 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(92 50 50)"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(121 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(151 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(180 50 50)"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(211 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(239 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(268 50 50)"/>
+      <path d="M45.5 43L47.7 11L48.8 9.4L51.2 9.4L52.3 11L54.5 43Z" transform="rotate(299 50 50)"/>
+      <path d="M45.4 43L47.6 5.2L48.7 3.5L51.3 3.5L52.4 5.2L54.6 43Z" transform="rotate(331 50 50)"/>
+    </g>
+  </symbol>
+  <symbol id="ic-claude-code" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M2 3.2h12v8H2Zm2 2h1v2.2H4Zm7 0h1v2.2h-1ZM0 7.4h2v2H0Zm14 0h2v2h-2ZM3 11.2h1v2.2H3Zm2 0h1v2.2H5Zm5 0h1v2.2h-1Zm2 0h1v2.2h-1Z"/>
+  </symbol>
+</svg>
+
 <div class="bg" aria-hidden="true">
   <div class="stream" id="stream"></div>
   <div class="windows" id="windows"></div>
@@ -163,6 +192,13 @@ footer a:hover{color:var(--ink)}
   <h1>Context for Claude, <span>continuous memory for you and your agents.</span></h1>
 
   <p class="sub">Everything you see, hear and read on your Mac becomes memory. Search your own past in seconds, and give Claude and your agents the context they have been missing.</p>
+
+  <p class="works">
+    <span class="wl">Works with</span>
+    <span class="wi"><svg width="15" height="15" aria-hidden="true"><use href="#ic-claude"/></svg>Claude</span>
+    <span class="wi"><svg width="16" height="16" aria-hidden="true"><use href="#ic-claude-code"/></svg>Claude&nbsp;Code</span>
+    <span class="wi">your agents</span>
+  </p>
 
   <a class="dl" href="download.html">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.9-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3-.7 1.4 0 1.8.7 3 .7 1.2 0 2-1.1 2.8-2.2.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.6-1-2.6-3.3zM14.2 5.6c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.7 1.4-.6.7-1 1.8-.9 2.8 1 .1 2-.5 2.7-1.3z"/></svg>
@@ -266,7 +302,8 @@ footer a:hover{color:var(--ink)}
     youtube:'<svg viewBox="0 0 24 24" width="13" height="13" style="margin-left:auto;flex:none"><rect x="1.5" y="5" width="21" height="14" rx="4.2" fill="#FF0000"/><path d="M10 9.3 15.6 12 10 14.7z" fill="#fff"/></svg>',
     sheets:'<svg viewBox="0 0 24 24" width="10" height="10" style="margin-left:auto;flex:none"><rect x="3.5" y="2" width="17" height="20" rx="2.4" fill="#0F9D58"/><g fill="#fff"><rect x="7" y="7" width="10" height="1.5"/><rect x="7" y="10.6" width="10" height="1.5"/><rect x="7" y="14.2" width="10" height="1.5"/><rect x="11.3" y="7" width="1.5" height="8.7"/></g></svg>',
     netflix:'<span style="margin-left:auto;font-size:8px;font-weight:600;letter-spacing:.14em;color:#E50914">NETFLIX</span>',
-    zsh:'<span style="margin-left:auto;font-size:8px;font-weight:500;color:#7C7C86">zsh</span>',
+    code:'<span style="margin-left:auto;display:inline-flex;color:#D97757"><svg width="15" height="15"><use href="#ic-claude-code"/></svg></span>',
+    claude:'<span style="margin-left:auto;display:inline-flex;color:#D97757"><svg width="12" height="12"><use href="#ic-claude"/></svg></span>',
     cal:'<svg viewBox="0 0 24 24" width="11" height="11" style="margin-left:auto;flex:none"><rect x="3" y="4.5" width="18" height="16" rx="2.4" fill="#fff" stroke="#DADCE0" stroke-width="1.4"/><rect x="3" y="4.5" width="18" height="4" rx="2" fill="#4285F4"/><rect x="6.5" y="11" width="4" height="3" rx=".8" fill="#EA4335"/><rect x="13" y="15" width="4.5" height="3" rx=".8" fill="#34A853"/></svg>',
     chat:'<svg viewBox="0 0 24 24" width="11" height="11" style="margin-left:auto;flex:none"><rect x="2.5" y="3.5" width="19" height="14" rx="4" fill="#5865F2"/><path d="M8 17.5h4l-3 3.5z" fill="#5865F2"/></svg>',
     figma:'<span style="margin-left:auto;display:inline-flex;gap:2px"><i style="width:6px;height:6px;border-radius:50%;background:#F24E1E"></i><i style="width:6px;height:6px;border-radius:50%;background:#A259FF"></i><i style="width:6px;height:6px;border-radius:50%;background:#1ABCFE"></i></span>',
@@ -360,12 +397,24 @@ footer a:hover{color:var(--ink)}
         '</div>'+
       '</div>'},
 
-    /* terminal */
-    {w:224,dark:1,stamp:'16:41',html:chrome(LOGO.zsh)+
+    /* agent in the terminal */
+    {w:224,dark:1,stamp:'16:41',html:chrome(LOGO.code)+
       '<div class="pad" style="padding:9px">'+
-        [['#2E9E6B',34],['#C9CBD4',72],['#C9CBD4',58],['#6FA8DC',44],['#C9CBD4',80],
-         ['#C9CBD4',66],['#D9A33C',52],['#2E9E6B',30],['#C9CBD4',74],['#C9CBD4',48]]
-          .map(function(p){ return '<div class="ln" style="width:'+p[1]+'%;background:'+p[0]+';opacity:.5;margin-bottom:6px"></div>'; }).join('')+
+        [['#D97757',34],['#C9CBD4',72],['#C9CBD4',58],['#6FA8DC',44],['#C9CBD4',80],
+         ['#C9CBD4',66],['#D97757',52],['#2E9E6B',30],['#C9CBD4',74],['#C9CBD4',48]]
+          .map(function(p){ return '<div class="ln" style="width:'+p[1]+'%;background:'+p[0]+';opacity:.55;margin-bottom:6px"></div>'; }).join('')+
+      '</div>'},
+
+    /* assistant conversation */
+    {w:238,stamp:'18:26',html:chrome(LOGO.claude)+
+      '<div class="pad" style="padding:10px">'+
+        '<div style="display:flex;justify-content:flex-end;margin-bottom:9px">'+
+          '<span style="width:58%;height:20px;border-radius:11px 11px 3px 11px;background:#F0EAE1"></span>'+
+        '</div>'+
+        '<div style="display:flex;gap:7px">'+
+          '<span style="display:inline-flex;flex:none;color:#D97757"><svg width="14" height="14"><use href="#ic-claude"/></svg></span>'+
+          '<div style="flex:1">'+lines([96,88,74,92,66])+'</div>'+
+        '</div>'+
       '</div>'},
 
     /* market chart */
