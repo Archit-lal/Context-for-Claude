@@ -1,0 +1,39 @@
+download.html
+  s_f07ce941ce446e::t_da2fb3a6abf145 89-90,92-100,129-148,257-268
+context.html
+  s_f07ce941ce446e::t_4d1bb1723a365e 170-172
+  s_f07ce941ce446e::t_42e81631569e20 251-262
+  s_f07ce941ce446e::t_6c549c41f49fa2 99-100,102,105-111
+  s_f07ce941ce446e::t_cc7b9b2eef66b5 359-370,374-375,377-394,396
+  s_f07ce941ce446e::t_d6a565ec5742bc 113,115-134,137-144
+  s_f07ce941ce446e::t_e7ebafe1ed6845 151-159,267-278,476,481-486,497
+  s_f07ce941ce446e::t_31eca8cec0a4e6 95
+  s_f07ce941ce446e::t_34b73308d10ecd 103-104
+  s_f07ce941ce446e::t_0e390afe360db4 78,85,90,96,114,136,147-148
+  s_f07ce941ce446e::t_696737ff771445 199-218
+  s_18cae1c5af4258::t_b1ef2a44b8ac07 112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "3d75df635e41e1d8b4bd6aa774ee9102e1cdcbeb",
+  "prompts": {},
+  "sessions": {
+    "s_18cae1c5af4258": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e4668b19-3e0f-4e3c-83ea-9b4b9f2fb786",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    },
+    "s_f07ce941ce446e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "58a03fba-b202-4ca7-a3be-d67fdab5439c",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
