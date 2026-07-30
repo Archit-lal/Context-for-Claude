@@ -75,64 +75,88 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-off
 
 /* ---------- content ---------- */
 main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;width:100%;max-width:47rem;margin:0 auto;padding:4rem 1.75rem 2rem}
+  text-align:center;width:100%;max-width:47rem;margin:0 auto;padding:3rem 1.75rem 1.5rem}
 /* paper halo keeps the copy crisp wherever a window drifts behind it */
 main::before{content:'';position:absolute;z-index:-1;pointer-events:none;
   left:50%;top:50%;transform:translate(-50%,-50%);width:min(56rem,100vw);height:calc(100% + 3rem);
   background:radial-gradient(closest-side,rgba(251,248,244,.99) 0%,rgba(251,248,244,.96) 54%,rgba(251,248,244,.72) 80%,rgba(251,248,244,0) 100%)}
 
 .mark{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--disp);font-weight:600;font-size:1rem;
-  letter-spacing:-.01em;text-decoration:none;margin-bottom:2.75rem;color:var(--ink)}
+  letter-spacing:-.01em;text-decoration:none;margin-bottom:2rem;color:var(--ink)}
 .mark svg{width:22px;height:22px;flex:none}
 
 h1{font-family:var(--disp);font-weight:600;font-size:clamp(2rem,5.6vw,3.35rem);line-height:1.06;letter-spacing:-.035em}
 h1 span{color:var(--faint)}
-.sub{margin:1.5rem auto 0;max-width:34rem;color:var(--mid);font-size:1.02rem}
+.sub{margin:1.35rem auto 0;max-width:34rem;color:var(--mid);font-size:1.02rem}
 
 .sub .m{width:1em;height:1em;vertical-align:-.16em;margin-right:.15em;color:#D97757}
 .sub .m.mc{width:1.05em;height:1.05em;vertical-align:-.19em;margin-right:.22em}
 
-.dl{display:inline-flex;align-items:center;gap:.6rem;margin-top:2.25rem;padding:.85rem 1.6rem;
+.dl{position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;gap:.6rem;margin-top:1.9rem;padding:.85rem 1.6rem;
   background:var(--ink);color:var(--paper);border-radius:999px;text-decoration:none;
   font-weight:600;font-size:1rem;letter-spacing:-.01em;
-  box-shadow:0 10px 24px -12px rgba(23,20,18,.55);transition:transform .18s ease,box-shadow .18s ease}
+  box-shadow:0 10px 24px -12px rgba(23,20,18,.55);
+  transition:transform .22s cubic-bezier(.22,1,.36,1),box-shadow .22s ease}
 .dl svg{width:17px;height:17px;flex:none}
-.dl:hover{transform:translateY(-1px);box-shadow:0 14px 30px -12px rgba(23,20,18,.6)}
+/* a sheen sweeps across, the mark hops, the whole thing lifts */
+.dl::before{content:'';position:absolute;top:0;bottom:0;left:-150%;width:55%;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);
+  transform:skewX(-18deg)}
+.dl:hover::before{animation:sheen .8s cubic-bezier(.32,.72,.35,1)}
+@keyframes sheen{from{left:-150%}to{left:170%}}
+.dl:hover{transform:translateY(-2px) scale(1.015);box-shadow:0 18px 34px -14px rgba(23,20,18,.62)}
+.dl:hover svg{animation:hop .62s cubic-bezier(.34,1.56,.64,1)}
+@keyframes hop{0%,100%{transform:translateY(0)}30%{transform:translateY(2.5px)}65%{transform:translateY(-1.5px)}}
+.dl:active{transform:translateY(0) scale(.985)}
 
-/* ---------- ask pill ---------- */
-.ask{display:flex;align-items:center;gap:.7rem;width:100%;max-width:31rem;margin:3.25rem auto 0;
-  padding:.5rem .5rem .5rem 1rem;background:#fff;border:1px solid var(--line);border-radius:999px;
-  box-shadow:0 12px 30px -18px rgba(23,20,18,.3);text-align:left}
-.ask-mark{display:inline-flex;flex:none;color:var(--bronze)}
-.ask-mark svg{width:20px;height:20px}
-.ask-text{flex:1;min-width:0;font-size:1.02rem;color:var(--ink);white-space:nowrap;overflow:hidden}
-.ask-text.idle{color:var(--mid)}
-.caret{display:inline-block;width:1.5px;height:1.05em;margin-left:1px;vertical-align:-.16em;
-  background:var(--bronze);animation:blink 1.05s steps(1) infinite}
+/* ---------- ask: a Claude Code session ---------- */
+.ask{position:relative;width:100%;max-width:34rem;margin:2.3rem auto 0;text-align:left;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  background:#131316;border:1px solid rgba(23,20,18,.16);border-radius:12px;overflow:hidden;
+  box-shadow:0 26px 60px -30px rgba(23,20,18,.65),0 2px 10px rgba(23,20,18,.14)}
+.ask-bar{display:flex;align-items:center;gap:6px;padding:8px 11px;
+  background:#1B1B20;border-bottom:1px solid rgba(255,255,255,.07)}
+.ask-bar i{width:8px;height:8px;border-radius:50%;flex:none}
+.ask-bar i:nth-of-type(1){background:#F45B4F}
+.ask-bar i:nth-of-type(2){background:#F5BE4F}
+.ask-bar i:nth-of-type(3){background:#4FBE6B}
+.ask-path{margin-left:6px;font-size:.66rem;color:#75757F;letter-spacing:.02em}
+.ask-cc{margin-left:auto;display:inline-flex;color:#D97757}
+.ask-body{padding:12px 14px 15px;font-size:.83rem;line-height:1.8;color:#C4C6D0}
+.ask-body .d{color:#6C6C76}
+.ask-body .cmd{color:#D97757;font-weight:600}
+.ask-body .mk{color:#D97757}
+.ask-body b{color:#fff;font-weight:600}
+.ask-q{margin-top:.1rem;color:#fff;white-space:nowrap;overflow:hidden}
+.ask-q .ar{color:#D97757}
+.caret{display:inline-block;width:1.5px;height:1.02em;margin-left:1px;vertical-align:-.14em;
+  background:#D97757;animation:blink 1.05s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.send{flex:none;width:38px;height:38px;border:0;border-radius:12px;cursor:pointer;
-  display:grid;place-items:center;color:#fff;
-  background:linear-gradient(160deg,#B38136,#8F6420 60%,#7A5318);
-  box-shadow:0 6px 14px -6px rgba(143,100,32,.7);transition:transform .16s ease,filter .16s ease}
-.send svg{width:17px;height:17px}
-.send:hover{transform:translateY(-1px);filter:saturate(1.1)}
-.send:active{transform:translateY(0) scale(.96)}
-
-.answer{min-height:3.2rem;margin-top:1rem;padding:0 .6rem;max-width:31rem;
-  font-size:.95rem;color:var(--mid);opacity:0;transition:opacity .3s ease}
-.answer.on{opacity:1}
-.answer b{font-weight:500;color:var(--ink)}
+.ask-out{min-height:3.2rem;margin-top:.25rem;color:#A6A8B2;opacity:0;transition:opacity .25s ease}
+.ask-out.on{opacity:1}
+.ask-out .bul{color:#D97757}
+.ask-out b{color:#fff;font-weight:600}
+.send{position:absolute;right:11px;bottom:11px;padding:3px 8px;cursor:pointer;
+  font-family:inherit;font-size:.6rem;letter-spacing:.04em;
+  color:#8A8A94;background:#212127;border:1px solid rgba(255,255,255,.09);border-radius:6px;
+  transition:color .16s ease,border-color .16s ease}
+.send:hover{color:#fff;border-color:rgba(217,119,87,.6)}
 
 /* ---------- footer ---------- */
-footer{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;
-  flex-wrap:wrap;gap:.6rem 1.2rem;padding:1.6rem 1.75rem 2.4rem;
+footer{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.35rem;
+  padding:.6rem 1.75rem 1.5rem;
   font-family:var(--mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;
   font-weight:500;color:var(--faint)}
-footer a{text-decoration:none}
-footer a:hover{color:var(--ink)}
-.built{display:inline-flex;align-items:center;gap:.45rem}
-.built svg{width:14px;height:14px;flex:none;color:var(--mid)}
-.sep{color:var(--line)}
+footer a{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;
+  padding:.4rem .85rem;border-radius:999px;border:1px solid transparent;color:var(--mid);
+  transition:color .18s ease,border-color .18s ease,background-color .18s ease}
+footer a svg{flex:none;color:var(--faint);transition:color .18s ease,transform .3s ease}
+footer a:hover{color:var(--ink);border-color:var(--line);background:rgba(255,255,255,.72)}
+footer a:hover svg{color:var(--bronze)}
+.built:hover svg{transform:rotate(45deg)}
+.flinks{display:flex;align-items:center;gap:.25rem}
+.flinks a{font-size:.62rem;padding:.35rem .75rem}
 
 @media (max-width:640px){
   body{font-size:16px}
@@ -143,7 +167,9 @@ footer a:hover{color:var(--ink)}
 @media (prefers-reduced-motion:reduce){
   .win,.sl{animation-play-state:paused}
   .caret{animation:none}
-  .dl:hover,.send:hover{transform:none}
+  .dl:hover{transform:none}
+  .dl:hover::before,.dl:hover svg{animation:none}
+  .built:hover svg{transform:none}
 }
 </style>
 </head>
@@ -169,6 +195,26 @@ footer a:hover{color:var(--ink)}
   </symbol>
   <symbol id="ic-claude-code" viewBox="0 0 16 16">
     <path fill="currentColor" fill-rule="evenodd" d="M2 3.2h12v8H2Zm2 2h1v2.2H4Zm7 0h1v2.2h-1ZM0 7.4h2v2H0Zm14 0h2v2h-2ZM3 11.2h1v2.2H3Zm2 0h1v2.2H5Zm5 0h1v2.2h-1Zm2 0h1v2.2h-1Z"/>
+  </symbol>
+  <symbol id="ic-omi" viewBox="0 0 24 24">
+    <g fill="currentColor">
+      <circle cx="12" cy="5.46" r="1.62"/><circle cx="16.62" cy="7.38" r="1.62"/>
+      <circle cx="18.54" cy="12" r="1.62"/><circle cx="16.62" cy="16.62" r="1.62"/>
+      <circle cx="12" cy="18.54" r="1.62"/><circle cx="7.38" cy="16.62" r="1.62"/>
+      <circle cx="5.46" cy="12" r="1.62"/><circle cx="7.38" cy="7.38" r="1.62"/>
+    </g>
+  </symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.51 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23z"/>
+  </symbol>
+  <symbol id="ic-periphery" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11.9 1.7C17.3 1.75 21.75 5.9 21.7 11.1C21.65 16.2 17.9 19.95 12.4 19.9C6.9 19.85 2.35 16.1 2.2 10.8C2.1 5.6 6.4 1.75 11.9 1.7Z"/>
+      <path d="M7.1 19.5C7.3 21.6 6.8 22.7 5.3 22.4"/>
+      <path d="M16.9 19.5C16.7 21.6 17.2 22.7 18.7 22.4"/>
+    </g>
+    <ellipse cx="8.5" cy="11.9" rx="1.05" ry="1.65" fill="currentColor"/>
+    <ellipse cx="15.5" cy="11.9" rx="1.05" ry="1.65" fill="currentColor"/>
   </symbol>
 </svg>
 
@@ -202,42 +248,34 @@ footer a:hover{color:var(--ink)}
   </a>
 
   <form class="ask" id="ask" autocomplete="off">
-    <span class="ask-mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none">
-        <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M11.9 1.7C17.3 1.75 21.75 5.9 21.7 11.1C21.65 16.2 17.9 19.95 12.4 19.9C6.9 19.85 2.35 16.1 2.2 10.8C2.1 5.6 6.4 1.75 11.9 1.7Z"/>
-          <path d="M7.1 19.5C7.3 21.6 6.8 22.7 5.3 22.4"/>
-          <path d="M16.9 19.5C16.7 21.6 17.2 22.7 18.7 22.4"/>
-        </g>
-        <ellipse cx="8.5" cy="11.9" rx="1.05" ry="1.65" fill="currentColor"/>
-        <ellipse cx="15.5" cy="11.9" rx="1.05" ry="1.65" fill="currentColor"/>
-      </svg>
-    </span>
-    <span class="ask-text" id="askText"><span id="askTyped"></span><span class="caret" id="caret"></span></span>
-    <button class="send" type="submit" aria-label="Ask">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5.5M12 5.5 5.8 11.7M12 5.5l6.2 6.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
+    <div class="ask-bar">
+      <i></i><i></i><i></i>
+      <span class="ask-path">claude &mdash; ~/periphery</span>
+      <span class="ask-cc" aria-hidden="true"><svg width="15" height="15"><use href="#ic-claude-code"/></svg></span>
+    </div>
+    <div class="ask-body">
+      <div><span class="d">$</span> <span class="cmd">claude</span></div>
+      <div><span class="mk">&#10033;</span> context connected &middot; <b>6 h 12 m</b> of memory</div>
+      <div class="ask-q"><span class="ar">&gt;</span> <span id="askTyped"></span><span class="caret" id="caret"></span></div>
+      <div class="ask-out" id="answer" aria-live="polite"></div>
+    </div>
+    <button class="send" type="submit">&#9166; enter</button>
   </form>
-
-  <p class="answer" id="answer" aria-live="polite"></p>
 </main>
 
 <footer>
-  <span class="built">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <g fill="currentColor">
-        <circle cx="12" cy="5.46" r="1.62"/><circle cx="16.62" cy="7.38" r="1.62"/>
-        <circle cx="18.54" cy="12" r="1.62"/><circle cx="16.62" cy="16.62" r="1.62"/>
-        <circle cx="12" cy="18.54" r="1.62"/><circle cx="7.38" cy="16.62" r="1.62"/>
-        <circle cx="5.46" cy="12" r="1.62"/><circle cx="7.38" cy="7.38" r="1.62"/>
-      </g>
-    </svg>
-    Built by the <a href="https://www.omi.me" target="_blank" rel="noopener noreferrer">Omi</a> team
-  </span>
-  <span class="sep" aria-hidden="true">·</span>
-  <a href="https://x.com/Archit_lal_" target="_blank" rel="noopener noreferrer">Twitter</a>
-  <span class="sep" aria-hidden="true">·</span>
-  <a href="index.html">Periphery</a>
+  <a class="built" href="https://www.omi.me" target="_blank" rel="noopener noreferrer">
+    <svg width="16" height="16" aria-hidden="true"><use href="#ic-omi"/></svg>
+    <span>Built by the Omi team</span>
+  </a>
+  <nav class="flinks">
+    <a href="https://x.com/Archit_lal_" target="_blank" rel="noopener noreferrer">
+      <svg width="11" height="11" aria-hidden="true"><use href="#ic-x"/></svg>Twitter
+    </a>
+    <a href="index.html">
+      <svg width="14" height="14" aria-hidden="true"><use href="#ic-periphery"/></svg>Periphery
+    </a>
+  </nav>
 </footer>
 
 <script>
@@ -318,15 +356,44 @@ footer a:hover{color:var(--ink)}
     shot('hn.jpg',        236, '08:47', 0),
     shot('wiki.jpg',      238, '11:31', 0),
     shot('linear.jpg',    248, '14:19', 1),
-    shot('notion.jpg',    242, '15:26', 0)
+    shot('notion.jpg',    242, '15:26', 0),
+    shot('whatsapp.jpg',  252, '07:52', 0),
+    shot('telegram.jpg',  244, '13:34', 0),
+    shot('wechat.jpg',    246, '21:09', 0),
+    shot('slack.jpg',     258, '10:18', 0),
+    shot('discord.jpg',   252, '22:47', 1),
+    shot('instagram.jpg', 246, '18:55', 0),
+    shot('unsplash.jpg',  250, '14:41', 0),
+    shot('soundcloud.jpg',248, '12:29', 0),
+    shot('imdb.jpg',      250, '23:52', 1),
+    shot('nyt.jpg',       254, '06:47', 0),
+    shot('duolingo.jpg',  240, '19:36', 0)
   ];
 
   /* drift the windows down either margin, clear of the centre column */
-  var XS = [2,7,12,17,84,89,93,98,4,10,86,96,14,91,6,81,9,79,76];
+  var XS = [2,5,8,11,14,17,20,3.5,9.5,15.5,6.5,
+            80,83,86,89,92,95,98,81.5,87.5,93.5,84.5];
   var w = window.innerWidth;
-  var frag = '', count = w < 700 ? 8 : (w < 1100 ? 12 : XS.length);
+  var frag = '', count = w < 700 ? 8 : (w < 1100 ? 13 : XS.length);
+
+  /* shuffle, so a different set of apps drifts past on each visit */
+  var pool = KINDS.slice();
+  for (var s = pool.length - 1; s > 0; s--){
+    var r = Math.floor(Math.random() * (s + 1)), tmp = pool[s];
+    pool[s] = pool[r]; pool[r] = tmp;
+  }
+  /* the two drawn Claude windows always make the cut */
+  KINDS.filter(function(k){ return !k.html.indexOf || k.html.indexOf('<img') === -1; })
+       .forEach(function(k){
+    var at = pool.indexOf(k);
+    if (at >= count){
+      var into = Math.floor(Math.random() * count);
+      pool[at] = pool[into]; pool[into] = k;
+    }
+  });
+
   for (var i=0;i<count;i++){
-    var k = KINDS[i % KINDS.length], dur = rnd(15,27);
+    var k = pool[i % pool.length], dur = rnd(15,27);
     frag += '<div class="win'+(k.dark ? ' dark' : '')+'" style="'+
       '--x:'+XS[i]+'%;--w:'+k.w+'px;--s:'+rnd(.58,.94).toFixed(2)+';--rot:'+rnd(-2.6,2.6).toFixed(2)+'deg;'+
       '--op:'+rnd(.8,1).toFixed(2)+';--dur:'+dur.toFixed(1)+'s;--delay:-'+rnd(0,dur).toFixed(1)+'s">'+
@@ -381,7 +448,6 @@ footer a:hover{color:var(--ink)}
   ];
   var typed  = document.getElementById('askTyped'),
       caret  = document.getElementById('caret'),
-      askText= document.getElementById('askText'),
       answer = document.getElementById('answer'),
       form   = document.getElementById('ask');
   var qi = 0, ci = 0, timer = null, phase = 'type';
@@ -389,7 +455,6 @@ footer a:hover{color:var(--ink)}
   function step(){
     var q = QA[qi][0];
     if (phase === 'type'){
-      askText.classList.add('idle');
       typed.textContent = q.slice(0, ++ci);
       if (ci >= q.length){ phase = 'hold'; timer = setTimeout(step, 950); }
       else timer = setTimeout(step, 42 + Math.random()*38);
@@ -408,15 +473,17 @@ footer a:hover{color:var(--ink)}
     var pair = QA[qi];
     typed.textContent = pair[0];
     ci = pair[0].length;
-    askText.classList.remove('idle');
-    answer.innerHTML = pair[1];
+    answer.innerHTML = '<div class="d">&bull; searching your context&hellip;</div>';
     answer.classList.add('on');
     rush();
     phase = 'clear';
     timer = setTimeout(function(){
-      answer.classList.remove('on');
-      timer = setTimeout(step, 320);
-    }, 3400);
+      answer.innerHTML = '<div><span class="bul">&#9210;</span> ' + pair[1] + '</div>';
+      timer = setTimeout(function(){
+        answer.classList.remove('on');
+        timer = setTimeout(step, 320);
+      }, 3200);
+    }, 640);
   }
 
   form.addEventListener('submit', function(e){
@@ -427,8 +494,7 @@ footer a:hover{color:var(--ink)}
 
   if (reduce){
     typed.textContent = QA[0][0];
-    askText.classList.remove('idle');
-    answer.innerHTML = QA[0][1];
+    answer.innerHTML = '<div><span class="bul">&#9210;</span> ' + QA[0][1] + '</div>';
     answer.classList.add('on');
     caret.style.display = 'none';
   } else {
