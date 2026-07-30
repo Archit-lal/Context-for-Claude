@@ -1,0 +1,42 @@
+download.html
+  s_f07ce941ce446e::t_46029fe2d776b8 82
+  s_f07ce941ce446e::t_2abbbb4cbde1ec 110
+  s_f07ce941ce446e::t_290a6dd8807bb0 111,113-114,116-117,119-120,122
+  s_f07ce941ce446e::t_0d3c51be786a02 144
+  s_f07ce941ce446e::t_e1bb35f5355381 107-109,123-129
+  s_f07ce941ce446e::t_9f5178de1e5cb5 34-36
+  s_f07ce941ce446e::t_279111a7e5a466 112,115,118,121
+  s_f07ce941ce446e::t_b53375b79c1439 212,216
+context.html
+  s_f07ce941ce446e::t_dfa114583be5fb 154,157,160,163
+  s_f07ce941ce446e::t_b7dbe53b425fb0 305-306
+  s_f07ce941ce446e::t_200e23e98b4d93 86-92
+  s_f07ce941ce446e::t_3bbf4267060bfc 196-202
+  s_f07ce941ce446e::t_3814d1ffab885f 153,155-156,158-159,161-162,164
+  s_f07ce941ce446e::t_a2014f5d246ea2 400-401,403-417
+  s_f07ce941ce446e::t_966162c22b75df 149-151,165-171
+  s_f07ce941ce446e::t_fd76be69cc0491 152
+index.html
+  s_f07ce941ce446e::t_a05fc2971a5c98 73,76,79,82
+  s_f07ce941ce446e::t_ffe8865c463989 67-70,84-90
+  s_f07ce941ce446e::t_67b03477bf293c 72,74-75,77-78,80-81,83
+  s_f07ce941ce446e::t_bb91f801aab741 49-50
+  s_f07ce941ce446e::t_e086ceda62bba4 71
+  s_f07ce941ce446e::t_5afa78242b5997 130-134
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "8efc37b8998fee22e3facda5d8bca82bd4c5dcb7",
+  "prompts": {},
+  "sessions": {
+    "s_f07ce941ce446e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "58a03fba-b202-4ca7-a3be-d67fdab5439c",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
