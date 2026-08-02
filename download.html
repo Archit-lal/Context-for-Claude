@@ -244,8 +244,8 @@ footer a:hover svg{color:var(--bronze)}
 
 <script>
 (function(){
-  /* Point this at the signed .dmg once a build is published. */
-  var DOWNLOAD_URL = 'https://github.com/Archit-lal/Context-for-Claude/releases/latest/download/Context-for-Claude.dmg';
+  /* The .dmg ships alongside this page, so the path stays relative. */
+  var DOWNLOAD_URL = 'Context-for-Claude.dmg';
 
   /* Fetch through a hidden frame so a failed or missing build never
      navigates the visitor away from these steps. */
@@ -261,7 +261,9 @@ footer a:hover svg{color:var(--bronze)}
   }
 
   /* Retry stays a plain link, so it still works if framed loads are blocked. */
-  document.getElementById('retry').setAttribute('href', DOWNLOAD_URL);
+  var retry = document.getElementById('retry');
+  retry.setAttribute('href', DOWNLOAD_URL);
+  retry.setAttribute('download', '');
 
   setTimeout(start, 500);
 })();
