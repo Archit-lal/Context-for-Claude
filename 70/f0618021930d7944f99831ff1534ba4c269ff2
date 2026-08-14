@@ -1,0 +1,19 @@
+download.html
+  s_dfe0f905eb1a3f::t_2af7fecde31e54 247-248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "70f0618021930d7944f99831ff1534ba4c269ff2",
+  "prompts": {},
+  "sessions": {
+    "s_dfe0f905eb1a3f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3cc18b35-be96-4907-aa2d-455e2be3498a",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
