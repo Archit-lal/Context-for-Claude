@@ -1,0 +1,19 @@
+CNAME
+  s_647ed036d67f9d::t_483e726fd10d0e 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "4d4aec7b3e66c45045b77905ebc2e2501769c714",
+  "prompts": {},
+  "sessions": {
+    "s_647ed036d67f9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a56a0b72-177a-4dc9-83e3-7e75adcc9437",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
