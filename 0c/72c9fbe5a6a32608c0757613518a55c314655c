@@ -1,0 +1,32 @@
+.vercelignore
+  s_3c3a598a5031f0::t_9fde5706556d03 1-8
+README.md
+  s_3c3a598a5031f0::t_1b17bcea1e679d 10,17-21
+  s_d58145f2e376ea::t_af891b087cd790 22
+vercel.json
+  s_3c3a598a5031f0::t_a0a9c04b16afff 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "0c72c9fbe5a6a32608c0757613518a55c314655c",
+  "prompts": {},
+  "sessions": {
+    "s_3c3a598a5031f0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "042d6fbf-dc06-4144-8bcc-64fd949efb3a",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    },
+    "s_d58145f2e376ea": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9844074c-1a64-4911-aeee-4b41df105dff",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
