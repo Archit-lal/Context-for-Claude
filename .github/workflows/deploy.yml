@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    # Metric readings are data, not site content — they should not redeploy.
+    paths-ignore:
+      - 'metrics/**'
+      - 'scripts/**'
   workflow_dispatch:
 
 permissions:

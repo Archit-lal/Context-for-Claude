@@ -8,6 +8,8 @@ Static site for Context for Claude. Plain HTML, no build step.
 - `favicon.svg` — the mark
 - `.github/workflows/deploy.yml` — deploys to GitHub Pages on every push to `main`
 - `vercel.json` / `.vercelignore` — config for deploying the same files to Vercel
+- `scripts/track-downloads.sh` — records the release download count in `metrics/downloads.csv`
+- `.github/workflows/track-downloads.yml` — runs that script daily and commits the reading
 
 Preview locally:
 

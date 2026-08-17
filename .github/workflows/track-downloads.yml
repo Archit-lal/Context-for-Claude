@@ -1,0 +1,37 @@
+name: Track downloads
+
+on:
+  schedule:
+    # 07:17 UTC daily — off the hour, since scheduled runs queue on the hour.
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: track-downloads
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read the release download count
+        run: scripts/track-downloads.sh
+        env:
+          GH_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit the reading
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metrics/downloads.csv
+          if git diff --quiet --cached; then
+            echo "count unchanged today, nothing to commit"
+            exit 0
+          fi
+          git commit -m "chore(metrics): download count for $(date -u +%F) [skip ci]"
+          git push
