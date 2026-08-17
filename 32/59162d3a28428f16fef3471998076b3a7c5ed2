@@ -1,0 +1,30 @@
+scripts/track-downloads.sh
+  s_3c3a598a5031f0::t_c3106f556174b1 1-19,22,24-47
+  s_3c3a598a5031f0::t_f410c839809c02 20-21,23
+.github/workflows/track-downloads.yml
+  s_3c3a598a5031f0::t_499cd44a4c5ae6 1-37
+.vercelignore
+  s_3c3a598a5031f0::t_7fe66ec82ccb37 9-10
+metrics/downloads.csv
+  s_3c3a598a5031f0::t_f876a65ada70b5 1-2
+.github/workflows/deploy.yml
+  s_3c3a598a5031f0::t_b9fc9eb45e4057 6-9
+README.md
+  s_3c3a598a5031f0::t_fe34b331bb106e 11-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "3259162d3a28428f16fef3471998076b3a7c5ed2",
+  "prompts": {},
+  "sessions": {
+    "s_3c3a598a5031f0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "042d6fbf-dc06-4144-8bcc-64fd949efb3a",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Archit Lal <architdraftid@gmail.com>"
+    }
+  }
+}
