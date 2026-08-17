@@ -169,6 +169,7 @@ footer a:hover svg{color:var(--bronze)}
   .built:hover svg{transform:none}
 }
 </style>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
@@ -255,6 +256,15 @@ footer a:hover svg{color:var(--bronze)}
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function rnd(a,b){ return a + Math.random()*(b-a); }
+
+  /* ---------- download click ---------- */
+  /* The beacon posts with keepalive, so it survives the navigation. */
+  (function(){
+    var dl = document.querySelector('.dl');
+    if (dl) dl.addEventListener('click', function(){
+      window.va('event', { name: 'download_click' });
+    });
+  })();
 
   /* ---------- streaming lines ---------- */
   (function(){
